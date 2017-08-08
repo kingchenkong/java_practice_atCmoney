@@ -1,3 +1,4 @@
+
 //找出最大、最小及平均值
 //
 //一、程式範例描述：
@@ -23,71 +24,71 @@
 //Minimum=22 
 //Mean=43.167
 
-import java.util.*;
+import java.util.Scanner;
+
 public class prac6b {
 
 	public static void main(String[] args) {
-		//declare, initialize
+		// declare, initialize
 		Scanner scanner = new Scanner(System.in);
-		int needQuantity = 0; 
+		int needQuantity = 0;
 		int[] arrayIntSet;
 
-		//需要多少
-		while(needQuantity == 0) {
+		// 需要多少
+		while (needQuantity == 0) {
 			System.out.print("請輸入需要幾個數?\t");
 			needQuantity = scanner.nextInt();
 			System.out.print("");
 
-			//input error, reset
-			if(needQuantity < 1) {
+			// input error, reset
+			if (needQuantity < 1) {
 				System.out.println(" --> Error <-- ");
 				needQuantity = 0;
 			}
 		}
 
-		//	needQuantity個
-		arrayIntSet = new int[needQuantity];		
-		for(int i = 0; i < needQuantity; i++) {
+		// needQuantity個
+		arrayIntSet = new int[needQuantity];
+		for (int i = 0; i < needQuantity; i++) {
 			arrayIntSet[i] = scanner.nextInt();
 		}
-		
-		//print - func
+
+		// print - func
 		printMax(arrayIntSet);
 		printMin(arrayIntSet);
 		printAv(arrayIntSet);
 
-
-
-		//recycle
+		// recycle
 		scanner.close();
 	}
-	//function
+
+	// function
 	public static void printMax(int[] arrayPara) {
 		int max = 0;
-		for(int i = 0; i < arrayPara.length; i++) {
-			if(max < arrayPara[i]) 
+		for (int i = 0; i < arrayPara.length; i++) {
+			if (max < arrayPara[i])
 				max = arrayPara[i];
 		}
 		System.out.println("Maximum = " + max);
 
 	}
+
 	public static void printMin(int[] arrayPara) {
 		int min = arrayPara[0];
-		for(int i = 0; i < arrayPara.length; i++) {
-			if(min > arrayPara[i])
+		for (int i = 0; i < arrayPara.length; i++) {
+			if (min > arrayPara[i])
 				min = arrayPara[i];
 		}
 		System.out.println("Minimum = " + min);
 	}
+
 	public static void printAv(int[] arrayPara) {
 		int average = 0;
-		for(int i = 0; i < arrayPara.length; i++) {
+		for (int i = 0; i < arrayPara.length; i++) {
 			average += arrayPara[i];
 		}
-		average /=arrayPara.length;
+		average /= arrayPara.length;
 		System.out.println("Average = " + average);
 	}
-
-
 
 }

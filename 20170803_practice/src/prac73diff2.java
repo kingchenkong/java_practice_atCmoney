@@ -1,3 +1,4 @@
+
 //字串反轉
 //
 //一、程式範例描述：
@@ -16,25 +17,27 @@
 //五、輸出範例： 
 //NCCU CS Progamming Master Contest
 //NCCU Computer Science
-import java.util.*;
+import java.util.Scanner;
+
 public class prac73diff2 {
 	public static Scanner scanner = new Scanner(System.in);
+
 	public static void main(String[] args) {
-		
+
 		System.out.println("請輸入字串: ");
 		String inputStr = scanner.nextLine();
 		System.out.println("----------------------------------------");
 
 		char[] arrCharReverse = new char[inputStr.length()];
 		int indexReverse = inputStr.length();
-		for(int i = 0; i < inputStr.length() ; i++) {
+		for (int i = 0; i < inputStr.length(); i++) {
 			arrCharReverse[i] = inputStr.charAt(indexReverse - 1);
-			if(indexReverse != 0) {
+			if (indexReverse != 0) {
 				indexReverse--;
 			}
 		}
 		System.out.print("\n 反轉字串 ：");
-		for(int i = 0; i < arrCharReverse.length; i++) {
+		for (int i = 0; i < arrCharReverse.length; i++) {
 			System.out.print(arrCharReverse[i]);
 		}
 		System.out.println("");

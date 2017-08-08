@@ -1,3 +1,4 @@
+
 //題目
 //螺旋矩陣
 //問題描述 
@@ -16,23 +17,23 @@
 
 import java.util.Arrays;
 import java.util.Scanner;
+
 public class prac3h {
 
 	public static void main(String[] args) {
-		//declare, initial
+		// declare, initial
 		Scanner scanner = new Scanner(System.in);
 
-		//array
+		// array
 		int[][] arrayTest;
 		int[][] arrayRotate;
 
-		//variable
+		// variable
 		int arraySize = 0;
 
-
-		//#####
-		//Begin
-		//#####
+		// #####
+		// Begin
+		// #####
 		System.out.println("\t\t-- 螺旋矩陣 --");
 
 		// input & check
@@ -41,70 +42,69 @@ public class prac3h {
 			System.out.println("");
 			arraySize = scanner.nextInt();
 
-
-		} while( arraySize < 1 );	//[...-2, -1, 0] 重新輸入
+		} while (arraySize < 1); // [...-2, -1, 0] 重新輸入
 
 		// arraySize = 1
-		if(arraySize == 1) {
+		if (arraySize == 1) {
 			System.out.println("001");
 		} else {
-			//arraySize > 1
+			// arraySize > 1
 
-			//##########
+			// ##########
 			// part. I
-			//##########
+			// ##########
 			System.out.printf("size 為 '%2d' 的 螺旋矩陣\n", arraySize);
-			//array initial
+			// array initial
 			arrayRotate = new int[arraySize][arraySize];
 
-			for(int i = 0; i < arrayRotate.length; i++)
+			for (int i = 0; i < arrayRotate.length; i++)
 				Arrays.fill(arrayRotate[i], -1);
 
-			//array position & value setting
+			// array position & value setting
 			int nowCircle = 0;
 			int count = 1;
 			int j = 0, k = 0;
-//			for(int i = 1; i <= (arrayRotate.length * arrayRotate.length); i++) {
-			for(int i = 0; i < arrayRotate.length; i++) {
-				
-				for( ; j < (arrayRotate.length - nowCircle); j++, count++) {
+			// for(int i = 1; i <= (arrayRotate.length * arrayRotate.length); i++) {
+			for (int i = 0; i < arrayRotate.length; i++) {
+
+				for (; j < (arrayRotate.length - nowCircle); j++, count++) {
 					arrayRotate[k][j] = count;
 				}
 				k += 1;
 				j -= 1;
-				for( ; k < (arrayRotate.length - nowCircle); k++, count++) {
+				for (; k < (arrayRotate.length - nowCircle); k++, count++) {
 					arrayRotate[k][j] = count;
 				}
 				j -= 1;
 				k -= 1;
-				for( ; j >= nowCircle; j--, count++) {
+				for (; j >= nowCircle; j--, count++) {
 					arrayRotate[k][j] = count;
 				}
 				j += 1;
 				k -= 1;
-				for( ; k > nowCircle; k--, count++) {
+				for (; k > nowCircle; k--, count++) {
 					arrayRotate[k][j] = count;
 				}
 				j += 1;
 				k += 1;
-				
+
 				nowCircle += 1;
-				if(count > (arraySize * arraySize) ) {
+				if (count > (arraySize * arraySize)) {
 					break;
 				}
 			}
 
 			// array print
-			for(int i = 0; i < arraySize; i++) {
-				for(int a = 0; a < arraySize; a++) {
-					//補 '0'
+			for (int i = 0; i < arraySize; i++) {
+				for (int a = 0; a < arraySize; a++) {
+					// 補 '0'
 					System.out.print(" ");
-					if(arrayRotate[i][a] < 100)
+					if (arrayRotate[i][a] < 100)
 						System.out.print("0");
-					if(arrayRotate[i][a] < 10)
+					if (arrayRotate[i][a] < 10)
 						System.out.print("0");
 
-					if(j == arraySize - 1){
+					if (j == arraySize - 1) {
 						System.out.printf("%d", arrayRotate[i][a]);
 					} else {
 						System.out.printf("%d,", arrayRotate[i][a]);
@@ -114,15 +114,12 @@ public class prac3h {
 				System.out.println("");
 			}
 
-
-
-
 		}
-		//End
+		// End
 		System.out.println("");
 		System.out.println("is Over.");
 
-		//recycle
+		// recycle
 		scanner.close();
 		arrayTest = null;
 		arrayRotate = null;

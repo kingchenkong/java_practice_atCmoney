@@ -1,3 +1,4 @@
+
 //Ascii Code 與字元互轉
 //
 //一、程式範例描述：
@@ -19,43 +20,46 @@
 //五、輸出範例： 
 //AcsiiCode=65 / Asc2Char=A
 //Char=a / Char2AsciiCode=97
-import java.util.*;
+import java.util.Scanner;
+
 public class prac71 {
 	public static Scanner scanner = new Scanner(System.in);
+
 	public static void main(String[] args) {
 		int scanInt = 0;
 		do {
 			System.out.print("\n輸入一個數值 : ");
 			scanInt = scanner.nextInt();
-			if( (scanInt > 29) && (scanInt < 123)) {
+			if ((scanInt > 29) && (scanInt < 123)) {
 				break;
 			} else {
 				System.out.println("--> Error.<--");
 			}
-		} while(true);
-		System.out.println("AcsiiCode = " + scanInt + " / Asc2Char = " + (char)scanInt);
+		} while (true);
+		System.out.println("AcsiiCode = " + scanInt + " / Asc2Char = " + (char) scanInt);
 
-		char scanChar ;
+		char scanChar;
 		do {
 			System.out.print("\n輸入一個字元 : ");
 			scanChar = scanner.next().charAt(0);
-			if( ( ( (int)scanChar >= 48 ) && ( (int)scanChar <= 57 ) ) || ( ( (int)scanChar >= 65 ) && ( (int)scanChar <= 90 ) ) || ( ( (int)scanChar >= 97 ) && ( (int)scanChar <= 122 ) ) ) {
+			if ((((int) scanChar >= 48) && ((int) scanChar <= 57)) || (((int) scanChar >= 65) && ((int) scanChar <= 90))
+					|| (((int) scanChar >= 97) && ((int) scanChar <= 122))) {
 				break;
 			} else {
 				System.out.println("--> Error.<--");
 			}
-		} while(true);
-		System.out.println("AcsiiCode = " + scanChar + " / Asc2Char = " + (int)scanChar);
+		} while (true);
+		System.out.println("AcsiiCode = " + scanChar + " / Asc2Char = " + (int) scanChar);
 
 	}
-	//	function
+
+	// function
 	// - 分隔線
 	public static void longLine(String str) {
-		for(int i = 0; i < 20; i++) {
+		for (int i = 0; i < 20; i++) {
 			System.out.printf("%s", str);
 		}
 		System.out.println("");
 	}
-
 
 }

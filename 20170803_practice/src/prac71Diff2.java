@@ -1,3 +1,4 @@
+
 //判斷字串是字母還是數字
 //
 //一、程式範例描述：
@@ -38,6 +39,7 @@ import java.util.Scanner;
 
 public class prac71Diff2 {
 	public static Scanner scanner = new Scanner(System.in);
+
 	public static void main(String[] args) {
 
 		int[] arrCheck = new int[10];
@@ -46,15 +48,16 @@ public class prac71Diff2 {
 		// -1, 不是字母也不是數字
 		char[] arrChar = new char[10];
 		char scanChar;
-		
+
 		System.out.print("\n輸入 10 個字元 : ");
 		// 輸入
-		for(int i = 0; i < arrChar.length;i++) {
+		for (int i = 0; i < arrChar.length; i++) {
 			scanChar = scanner.next().charAt(0);
-			if( ((int)scanChar >= 48) && ((int)scanChar <= 57) ) {
+			if (((int) scanChar >= 48) && ((int) scanChar <= 57)) {
 				// if - 數字
 				arrCheck[i] = 1;
-			} else if( ((int)scanChar >= 65) && ((int)scanChar <= 90) || ((int)scanChar >= 97) && ((int)scanChar <= 122) ) {
+			} else if (((int) scanChar >= 65) && ((int) scanChar <= 90)
+					|| ((int) scanChar >= 97) && ((int) scanChar <= 122)) {
 				// if - 字母
 				arrCheck[i] = 2;
 			} else {
@@ -62,39 +65,39 @@ public class prac71Diff2 {
 				arrCheck[i] = -1;
 			}
 			arrChar[i] = scanChar;
-		}	
-		
+		}
+
 		// 輸出 10個字元
 		longLine("---");
-		for(int i = 0; i < arrChar.length; i++) {
+		for (int i = 0; i < arrChar.length; i++) {
 			System.out.print("\n" + arrChar[i]);
-			if(arrCheck[i] == 1) 
+			if (arrCheck[i] == 1)
 				System.out.println("\t 是 數字");
-			if(arrCheck[i] == 2) 
+			if (arrCheck[i] == 2)
 				System.out.println("\t 是 字母");
-			if(arrCheck[i] == -1) 
+			if (arrCheck[i] == -1)
 				System.out.println("\t 不是字母也不是數字");
 		}
-		
+
 		// 輸出 arrChar 是什麼組合
 		int multiCheck = 1;
-		for(int i = 0; i < arrCheck.length; i++) {
+		for (int i = 0; i < arrCheck.length; i++) {
 			multiCheck *= arrCheck[i];
 		}
 		System.out.print(arrChar);
-		if(multiCheck == 1) {
+		if (multiCheck == 1) {
 			System.out.println("\t 是 一堆數字");
-		} else if(multiCheck == 1024) {
+		} else if (multiCheck == 1024) {
 			System.out.println("\t 是 一群字元");
 		} else {
 			System.out.println("\t 不是字母也不是數字");
 		}
 	}
-	
-	//	function
+
+	// function
 	// - 分隔線
 	public static void longLine(String str) {
-		for(int i = 0; i < 20; i++) {
+		for (int i = 0; i < 20; i++) {
 			System.out.printf("%s", str);
 		}
 		System.out.println("");

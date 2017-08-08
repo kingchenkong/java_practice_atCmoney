@@ -1,3 +1,4 @@
+
 //判斷字串是否是整數
 //
 //一、程式範例描述：
@@ -16,14 +17,15 @@
 //五、輸出範例： 
 //字串:30 是整數
 //字串:ab 不是整數
-import java.util.*;
+import java.util.Scanner;
+
 public class prac72diff1 {
 
-	//static
+	// static
 	public static Scanner scanner = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		//declare
+		// declare
 		String scanStr;
 		char[] arrCharScan;
 		boolean isNum = true;
@@ -34,22 +36,22 @@ public class prac72diff1 {
 		System.out.println("");
 
 		// 轉 char array 法
-		//		arrCharScan = scanStr.toCharArray();
-		//		for(int i = 0; i < arrCharScan.length; i++) {
-		//			if ( (( (int)arrCharScan[i] ) < 48)  || ( ((int)arrCharScan[i] ) > 57) ){
-		//				System.out.println(scanStr + "不是整數");
-		//				isNum = false;
-		//				 break;
-		//			} 
-		//		}
-		//		if(isNum)
-		//			System.out.println(scanStr + "是整數");
-		//		System.out.println(Integer.MAX_VALUE);   
-		//			// 2,147,483,647
-		//		System.out.println(Integer.MIN_VALUE); 
-		//			// -2,147,483,648
+		// arrCharScan = scanStr.toCharArray();
+		// for(int i = 0; i < arrCharScan.length; i++) {
+		// if ( (( (int)arrCharScan[i] ) < 48) || ( ((int)arrCharScan[i] ) > 57) ){
+		// System.out.println(scanStr + "不是整數");
+		// isNum = false;
+		// break;
+		// }
+		// }
+		// if(isNum)
+		// System.out.println(scanStr + "是整數");
+		// System.out.println(Integer.MAX_VALUE);
+		// // 2,147,483,647
+		// System.out.println(Integer.MIN_VALUE);
+		// // -2,147,483,648
 
-		//parInt 法 - try-catch
+		// parInt 法 - try-catch
 		try {
 			Integer.parseInt(scanStr);
 			System.out.println(scanStr + " 是整數");

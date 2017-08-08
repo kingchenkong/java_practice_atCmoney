@@ -29,40 +29,38 @@
 //Option: 1) Add. 2) Output. -1) Quit: -1
 //Bye!
 
-
-import java.util.Scanner;
 import java.util.Arrays;
+import java.util.Scanner;
+
 public class prac3c {
 
 	public static void main(String[] args) {
-		//declare, initial
+		// declare, initial
 		Scanner scanner = new Scanner(System.in);
-		//array - score
-		int[] arrayStuNum = new int [5];
+		// array - score
+		int[] arrayStuNum = new int[5];
 		int[] arrayStuNum_Copy;
-		int[] arrayEngScore = new int [5];
+		int[] arrayEngScore = new int[5];
 		int[] arrayEngScore_Copy;
-		int[] arrayMaScore = new int [5];
+		int[] arrayMaScore = new int[5];
 		int[] arrayMaScore_Copy;
-		int[] arraySumScore = new int [5];
+		int[] arraySumScore = new int[5];
 		int[] arraySumScore_Copy;
 
-		//var - process control
-		int step = 1; //default - input new data
+		// var - process control
+		int step = 1; // default - input new data
 		boolean keepInputNewData = true;
 		boolean reInputNewData = false;
 		boolean redo = true;
 
-
-
-		//begin
+		// begin
 
 		do {
 
 			switch (step) {
 			case 1:
 
-				//step 1 - input new data
+				// step 1 - input new data
 				int inputStuNum = 0;
 				int inputEngScore = 0;
 				int inputMaScore = 0;
@@ -72,7 +70,7 @@ public class prac3c {
 				do {
 					keepInputNewData = true;
 
-					//StuNum
+					// StuNum
 					do {
 						reInputNewData = false;
 						System.out.print("Insert new data ( SN / Eng / Math): ");
@@ -82,11 +80,11 @@ public class prac3c {
 						inputEngScore = scanner.nextInt();
 						System.out.print(" ");
 						inputMaScore = scanner.nextInt();
-						System.out.println("");//換行
+						System.out.println("");// 換行
 
-						if(inputStuNum > arrayStuNum.length) {
-							//StuNum > array index
-							//array - copy and append
+						if (inputStuNum > arrayStuNum.length) {
+							// StuNum > array index
+							// array - copy and append
 
 							// append length
 							int x = inputStuNum - arrayStuNum.length;
@@ -94,107 +92,106 @@ public class prac3c {
 							arrayEngScore_Copy = Arrays.copyOf(arrayEngScore, arrayEngScore.length + x);
 							arrayMaScore_Copy = Arrays.copyOf(arrayMaScore, arrayMaScore.length + x);
 							arraySumScore_Copy = Arrays.copyOf(arraySumScore, arraySumScore.length + x);
-							//copy data
+							// copy data
 							arrayStuNum = Arrays.copyOf(arrayStuNum_Copy, arrayStuNum_Copy.length);
 							arrayEngScore = Arrays.copyOf(arrayEngScore_Copy, arrayEngScore_Copy.length);
 							arrayMaScore = Arrays.copyOf(arrayMaScore_Copy, arrayMaScore_Copy.length);
 							arraySumScore = Arrays.copyOf(arraySumScore_Copy, arraySumScore_Copy.length);
 
 						}
-						if ( (inputStuNum <= arrayStuNum.length) && ( inputStuNum != -1) ) {
-							if(arrayStuNum[inputStuNum - 1] != 0) {
-								//該項次, 已有值
+						if ((inputStuNum <= arrayStuNum.length) && (inputStuNum != -1)) {
+							if (arrayStuNum[inputStuNum - 1] != 0) {
+								// 該項次, 已有值
 								System.out.println(" - index is Duplicated -");
 								reInputNewData = true;
 							}
 						}
-						//輸入錯誤
-						//default - 學號不可超過一百 ###
-						if( (inputStuNum == 0) || (inputStuNum < -1) || (inputStuNum > 100) ) {
+						// 輸入錯誤
+						// default - 學號不可超過一百 ###
+						if ((inputStuNum == 0) || (inputStuNum < -1) || (inputStuNum > 100)) {
 							System.out.println(" - Error -  Plz re-enter SN");
 							reInputNewData = true;
 						}
-						if( (inputEngScore == 0) || (inputEngScore < -1) || (inputEngScore > 100) ) {
+						if ((inputEngScore == 0) || (inputEngScore < -1) || (inputEngScore > 100)) {
 							System.out.println(" - Error - Plz re-enter English score");
 							reInputNewData = true;
 						}
-						if( (inputMaScore == 0) || (inputMaScore < -1) || (inputMaScore > 100) ) {
+						if ((inputMaScore == 0) || (inputMaScore < -1) || (inputMaScore > 100)) {
 							System.out.println(" - Error -  Plz re-enter Math score");
 							reInputNewData = true;
 						}
-					} while(reInputNewData);
+					} while (reInputNewData);
 
 					System.out.println("");
 
-					if(inputStuNum != -1) {
-						//store data in arrays
-						arrayStuNum[inputStuNum - 1] = inputStuNum;	// index
+					if (inputStuNum != -1) {
+						// store data in arrays
+						arrayStuNum[inputStuNum - 1] = inputStuNum; // index
 						// score
 						arrayEngScore[inputStuNum - 1] = inputEngScore;
 						arrayMaScore[inputStuNum - 1] = inputMaScore;
 						arraySumScore[inputStuNum - 1] = inputEngScore + inputMaScore; // sum
 
-						//###########
-						//test OutPut
-						//						System.out.println("SN		ENG.		MATH.	AVG.	");	
-						//						System.out.println("----------------------------------------------------------");
-						//						for(int c = 0; c < arrayStuNum.length; c++) {
-						//							System.out.print(arrayStuNum[c]);
-						//							System.out.print(" 		");
-						//							System.out.print(arrayEngScore[c]);
-						//							System.out.print(" 		");
-						//							System.out.print(arrayMaScore[c]);
-						//							System.out.print(" 		");
-						//							System.out.println(arraySumScore[c] / 2); // output is --> average				
-						//						}
-						//						System.out.println("");
-						//###########
+						// ###########
+						// test OutPut
+						// System.out.println("SN ENG. MATH. AVG. ");
+						// System.out.println("----------------------------------------------------------");
+						// for(int c = 0; c < arrayStuNum.length; c++) {
+						// System.out.print(arrayStuNum[c]);
+						// System.out.print(" ");
+						// System.out.print(arrayEngScore[c]);
+						// System.out.print(" ");
+						// System.out.print(arrayMaScore[c]);
+						// System.out.print(" ");
+						// System.out.println(arraySumScore[c] / 2); // output is --> average
+						// }
+						// System.out.println("");
+						// ###########
 					}
 					// -1, -1, -1
-					if ( (inputStuNum == -1) && (inputEngScore == -1) && (inputMaScore == -1) ) {
-						//################################
-						//	input End - break to option
-						//################################
+					if ((inputStuNum == -1) && (inputEngScore == -1) && (inputMaScore == -1)) {
+						// ################################
+						// input End - break to option
+						// ################################
 						break;
 					}
 
 					keepInputNewData = true;
-				} while(keepInputNewData);
+				} while (keepInputNewData);
 				break;
 
 			case 2:
-				//Output
-				for(int i = 1; i < arrayStuNum.length; i++) {
-					for(int j = 0; j < arrayStuNum.length - i; j++) {
+				// Output
+				for (int i = 1; i < arrayStuNum.length; i++) {
+					for (int j = 0; j < arrayStuNum.length - i; j++) {
 						// bubble sort
-						if(arraySumScore[j] < arraySumScore[j+1]) {
+						if (arraySumScore[j] < arraySumScore[j + 1]) {
 							int temp = 0;
-							//StuNum
+							// StuNum
 							temp = arrayStuNum[j];
-							arrayStuNum[j] = arrayStuNum[j+1];
-							arrayStuNum[j+1] = temp;
-							//EngScore
+							arrayStuNum[j] = arrayStuNum[j + 1];
+							arrayStuNum[j + 1] = temp;
+							// EngScore
 							temp = arrayEngScore[j];
-							arrayEngScore[j] = arrayEngScore[j+1];
-							arrayEngScore[j+1] = temp;
-							//MaScore
+							arrayEngScore[j] = arrayEngScore[j + 1];
+							arrayEngScore[j + 1] = temp;
+							// MaScore
 							temp = arrayMaScore[j];
-							arrayMaScore[j] = arrayMaScore[j+1];
-							arrayMaScore[j+1] = temp;
-							//SumScore
+							arrayMaScore[j] = arrayMaScore[j + 1];
+							arrayMaScore[j + 1] = temp;
+							// SumScore
 							temp = arraySumScore[j];
-							arraySumScore[j] = arraySumScore[j+1];
-							arraySumScore[j+1] = temp;
+							arraySumScore[j] = arraySumScore[j + 1];
+							arraySumScore[j + 1] = temp;
 
 						}
 					}
 				}
 
-
-				System.out.println("SN\t\tENG.\t\tMATH.\t\tAVG.	");	
+				System.out.println("SN\t\tENG.\t\tMATH.\t\tAVG.	");
 				System.out.println("----------------------------------------------------------");
-				for(int c = 0; c < arrayStuNum.length; c++) {
-					if(arrayStuNum[c] != 0) {
+				for (int c = 0; c < arrayStuNum.length; c++) {
+					if (arrayStuNum[c] != 0) {
 						System.out.print(arrayStuNum[c]);
 						System.out.print("\t\t");
 						System.out.print(arrayEngScore[c]);
@@ -208,7 +205,7 @@ public class prac3c {
 				break;
 
 			case -1:
-				//Quit
+				// Quit
 				redo = false;
 				break;
 
@@ -216,18 +213,18 @@ public class prac3c {
 				System.out.println("- Error - step");
 			}
 
-			//option select
-			if(step != -1) {
+			// option select
+			if (step != -1) {
 				System.out.print("Option: 1) Add. 2) Output. -1) Quit: ");
 				step = scanner.nextInt();
 				System.out.println("");
 			}
 
-		} while(redo);
+		} while (redo);
 
 		System.out.println("Bye!");
 
-		//recycle
+		// recycle
 		scanner.close();
 
 	}

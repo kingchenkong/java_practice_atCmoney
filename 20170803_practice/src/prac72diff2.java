@@ -1,3 +1,4 @@
+
 //字串轉變為 char[] (字串陣列)，再做處理。
 //
 //一、程式範例描述：
@@ -18,10 +19,10 @@
 //John
 //Michael
 //Bowie
-import java.util.*;
+import java.util.Scanner;
 
 public class prac72diff2 {
-	//static
+	// static
 	public static Scanner scanner = new Scanner(System.in);
 
 	public static void main(String[] args) {
@@ -30,15 +31,15 @@ public class prac72diff2 {
 		char[] arrcharCheck;
 
 		// scan
-		for(int i = 0; i < arrStringNames.length; i++) {
+		for (int i = 0; i < arrStringNames.length; i++) {
 			System.out.print("\n請輸入第" + (i + 1) + "個姓名: ");
 			arrStringNames[i] = scanner.next();
 		}
 		// print
-		for(int i = 0; i < arrStringNames.length; i++) {
+		for (int i = 0; i < arrStringNames.length; i++) {
 			arrcharCheck = arrStringNames[i].toCharArray();
-			System.out.print("charArray ["+ (i + 1) +"] => ");
-			for(int j = 0; j < arrcharCheck.length; j++ ) {
+			System.out.print("charArray [" + (i + 1) + "] => ");
+			for (int j = 0; j < arrcharCheck.length; j++) {
 				System.out.print(arrcharCheck[j]);
 			}
 			System.out.println("");

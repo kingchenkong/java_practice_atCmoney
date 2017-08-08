@@ -1,3 +1,4 @@
+
 //迴文
 //
 //一、程式範例描述：
@@ -18,10 +19,12 @@
 //Yes
 //Yes
 //No
-import java.util.*;
+import java.util.Scanner;
+
 public class prac73diff3 {
 
 	public static Scanner scanner = new Scanner(System.in);
+
 	public static void main(String[] args) {
 
 		System.out.println("請輸入字串: ");
@@ -29,19 +32,19 @@ public class prac73diff3 {
 		System.out.println("----------------------------------------");
 
 		char[] arrChar = new char[inputStr.length()];
-		for(int i = 0; i < inputStr.length(); i++ ) {
+		for (int i = 0; i < inputStr.length(); i++) {
 			arrChar[i] = inputStr.charAt(i);
 		}
 		int count = 0;
 		int indexReverse = inputStr.length() - 1;
-		
-		for(int i = 0; i < inputStr.length() / 2; i++) {
-				if( (int)arrChar[i] != (int)arrChar[indexReverse]) {
-					count += 1;
-				}
-				indexReverse -= 1;
+
+		for (int i = 0; i < inputStr.length() / 2; i++) {
+			if ((int) arrChar[i] != (int) arrChar[indexReverse]) {
+				count += 1;
+			}
+			indexReverse -= 1;
 		}
-		if(count == 0) {
+		if (count == 0) {
 			System.out.println("Yes!");
 		} else {
 			System.out.println("No!");

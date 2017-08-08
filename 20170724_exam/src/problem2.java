@@ -1,3 +1,4 @@
+
 //題目二（70%）：
 //請撰寫一個程式用以模擬五月天演唱會的訂票系統；
 //假設舉辦地點於小巨蛋，現場共有 '10000個座位'。演唱會共 '舉辦1場'。
@@ -60,17 +61,18 @@
 //感謝您的使用，再見！
 
 import java.util.Scanner;
+
 public class problem2 {
 
 	public static void main(String[] args) {
-		//Declare, Initial
+		// Declare, Initial
 		Scanner scanner = new Scanner(System.in);
 		boolean redo = true;
 		boolean reEnter = false;
-		boolean discount = false; //85折優惠, 一次買三張以上
-		int step = 0; 
+		boolean discount = false; // 85折優惠, 一次買三張以上
+		int step = 0;
 		// 0 => 開始購票
-		// 1 =>	選擇座位
+		// 1 => 選擇座位
 		// 2 => 選擇張數
 		// 3 => 請投入現金
 		// 4 => 找錢
@@ -84,39 +86,36 @@ public class problem2 {
 		int optionCash = 0;
 		int alreadyPutIn = 0;
 
-		//Begin
+		// Begin
 		do {
-			//##############################
-			//step = 0
-			//是否購票
-			//##############################
+			// ##############################
+			// step = 0
+			// 是否購票
+			// ##############################
 			do {
 				// re-circle setting
 				redo = true;
 				reEnter = false;
-				discount = false; 
+				discount = false;
 
-
-				if(step == 0) {
-					//開始訊息
-					System.out.print("歡迎進入五月天「諾亞方舟」演唱會的訂票系統！\n" + 
-							"VIP區座位（$3000）：" + ticketNumVip + "個\n" + 
-							"搖滾區座位（$2000）：" + ticketNumRock + "個\n" + 
-							"一般區座位（$1000）：" + ticketNumNormal + "個\n\n");
+				if (step == 0) {
+					// 開始訊息
+					System.out.print("歡迎進入五月天「諾亞方舟」演唱會的訂票系統！\n" + "VIP區座位（$3000）：" + ticketNumVip + "個\n"
+							+ "搖滾區座位（$2000）：" + ticketNumRock + "個\n" + "一般區座位（$1000）：" + ticketNumNormal + "個\n\n");
 					System.out.print("購票 1)是 2)否? ");
 					buyTicket = scanner.nextInt();
-					if(buyTicket == 2) {
-						//						System.out.println("取消購票！");
+					if (buyTicket == 2) {
+						// System.out.println("取消購票！");
 						redo = false;
-						//exit!!
-					} 
-					if(buyTicket == 1){
+						// exit!!
+					}
+					if (buyTicket == 1) {
 						System.out.println("開始購票！");
 						step = 1;
-						//進入 '選擇座位'
-					} 
+						// 進入 '選擇座位'
+					}
 					// > 2 or < 1 , 重新輸入
-					if( (buyTicket > 2) || (buyTicket < 1) ) {
+					if ((buyTicket > 2) || (buyTicket < 1)) {
 						reEnter = true;
 						System.out.println("錯誤選項, 請重新輸入");
 					} else {
@@ -124,108 +123,108 @@ public class problem2 {
 					}
 
 				}
-			} while( reEnter );
-			//##############################
-			//step = 1
-			//選擇座位, 有取消
-			//##############################
-			if(step == 1) {
+			} while (reEnter);
+			// ##############################
+			// step = 1
+			// 選擇座位, 有取消
+			// ##############################
+			if (step == 1) {
 				do {
 					System.out.print("選擇座位：1)VIP區 2)搖滾區 3)一般區 4)取消: ");
 					chooseSit = scanner.nextInt();
 
-					if(chooseSit == 1) {
+					if (chooseSit == 1) {
 						System.out.print("\nVIP區，");
 						step = 2;
-						//進入 '選擇張數'
+						// 進入 '選擇張數'
 					}
-					if(chooseSit == 2) {
+					if (chooseSit == 2) {
 						System.out.print("\n搖滾區，");
 						step = 2;
-						//進入 '選擇張數'
+						// 進入 '選擇張數'
 					}
-					if(chooseSit == 3) {
+					if (chooseSit == 3) {
 						System.out.print("\n一般區，");
 						step = 2;
-						//進入 '選擇張數'
+						// 進入 '選擇張數'
 					}
-					if(chooseSit == 4) {
+					if (chooseSit == 4) {
 						System.out.println("取消購票！");
 						step = 0;
-						//重新購票
+						// 重新購票
 					}
 					// > 4 or < 1 , 重新輸入
-					if( (chooseSit > 4) || (chooseSit < 1) ) {
+					if ((chooseSit > 4) || (chooseSit < 1)) {
 						reEnter = true;
 						System.out.println("錯誤選項, 請重新輸入");
 					} else {
 						reEnter = false;
 					}
 
-				} while( reEnter );
+				} while (reEnter);
 
 			}
-			//##############################
-			//step = 2
-			//選擇張數, 有取消, 有回上一步
-			//##############################
-			if(step == 2) {
+			// ##############################
+			// step = 2
+			// 選擇張數, 有取消, 有回上一步
+			// ##############################
+			if (step == 2) {
 				do {
 					System.out.print("請選擇張數(輸入-1回上一步)： ");
 					ticketNum = scanner.nextInt();
-					if(ticketNum == -1) {
+					if (ticketNum == -1) {
 						step = 1;
-						//回上一步
+						// 回上一步
 					}
-					if(ticketNum > 0) {
+					if (ticketNum > 0) {
 
-						//三張以上85折
+						// 三張以上85折
 						discount = (ticketNum > 2);
-						//test
-						//						System.out.println("discount is " + discount);
+						// test
+						// System.out.println("discount is " + discount);
 
-						if( (chooseSit == 1) && (ticketNum <= ticketNumVip) ) {
+						if ((chooseSit == 1) && (ticketNum <= ticketNumVip)) {
 							System.out.print("訂購 VIP區 座位共" + ticketNum + " 張，票價");
 							ticketPrice = ticketNum * 3000;
 							step = 3;
-							//進入 '投入現金'
-						} else if( (chooseSit == 2) && (ticketNum <= ticketNumRock) ) {
+							// 進入 '投入現金'
+						} else if ((chooseSit == 2) && (ticketNum <= ticketNumRock)) {
 							System.out.print("訂購 搖滾區 座位共" + ticketNum + " 張，票價");
 							ticketPrice = ticketNum * 2000;
 							step = 3;
-							//進入 '投入現金'
-						} else if( (chooseSit == 3) && (ticketNum <= ticketNumNormal) ) {
+							// 進入 '投入現金'
+						} else if ((chooseSit == 3) && (ticketNum <= ticketNumNormal)) {
 							System.out.print("訂購 一般區 座位共" + ticketNum + " 張，票價");
 							ticketPrice = ticketNum * 1000;
 							step = 3;
-							//進入 '投入現金'
+							// 進入 '投入現金'
 						} else {
 							System.out.println("座位不足!");
 							step = 0;
-							//重新購票
+							// 重新購票
 						}
-						if( discount ) {
+						if (discount) {
 							ticketPrice *= 0.85;
 						}
-						if(step == 3) {
-							System.out.println(ticketPrice +"。");
+						if (step == 3) {
+							System.out.println(ticketPrice + "。");
 						}
 					}
 					// < 1, 重新輸入
-					if( (ticketNum != -1) && (ticketNum  < 1) ) {
+					if ((ticketNum != -1) && (ticketNum < 1)) {
 						reEnter = true;
 						System.out.println("錯誤選項, 請重新輸入");
 					} else {
 						reEnter = false;
 					}
 
-				} while( reEnter );
+				} while (reEnter);
 
 			}
-			//step = 3
-			//投入現金
-			if(step == 3) {
-				//reset
+			// step = 3
+			// 投入現金
+			if (step == 3) {
+				// reset
 				alreadyPutIn = 0;
 
 				do {
@@ -233,69 +232,66 @@ public class problem2 {
 					optionCash = scanner.nextInt();
 
 					// >5, < 1, 重新輸入
-					if( (optionCash > 5) || ( optionCash < 1) ) {
+					if ((optionCash > 5) || (optionCash < 1)) {
 						System.out.println("錯誤選項, 請重新輸入");
 						reEnter = true;
 					} else {
 						reEnter = false;
 					}
 
-					if(optionCash == 5) {
+					if (optionCash == 5) {
 						System.out.println("取消購票！");
-						System.out.println("退還您 " + alreadyPutIn +"元");
+						System.out.println("退還您 " + alreadyPutIn + "元");
 						step = 0;
-						//重新購票
+						// 重新購票
 					} else {
-						if(optionCash == 1) {
+						if (optionCash == 1) {
 							alreadyPutIn += 50;
 						}
-						if(optionCash == 2) {
+						if (optionCash == 2) {
 							alreadyPutIn += 100;
 						}
-						if(optionCash == 3) {
+						if (optionCash == 3) {
 							alreadyPutIn += 500;
 						}
-						if(optionCash == 4) {
+						if (optionCash == 4) {
 							alreadyPutIn += 1000;
 						}
-						if(alreadyPutIn >= ticketPrice) {
-							System.out.println("收您 " + alreadyPutIn +"元");
-							System.out.println("找您 " + (alreadyPutIn - ticketPrice) +"元");
-							System.out.println("謝謝！\n" + 
-									"\n" + 
-									"---------------------------------------------------------------------------------");
-							//減票數
-							if(chooseSit == 1) {
+						if (alreadyPutIn >= ticketPrice) {
+							System.out.println("收您 " + alreadyPutIn + "元");
+							System.out.println("找您 " + (alreadyPutIn - ticketPrice) + "元");
+							System.out.println("謝謝！\n" + "\n"
+									+ "---------------------------------------------------------------------------------");
+							// 減票數
+							if (chooseSit == 1) {
 								ticketNumVip -= ticketNum;
 							}
-							if(chooseSit == 2) {
+							if (chooseSit == 2) {
 								ticketNumRock -= ticketNum;
 
 							}
-							if(chooseSit == 3) {
+							if (chooseSit == 3) {
 								ticketNumNormal -= ticketNum;
 
 							}
-							
 
 							reEnter = false;
 							step = 0;
-							//下一次購買
+							// 下一次購買
 						} else {
 							reEnter = true;
 						}
 
 					}
 
-				} while(reEnter);
+				} while (reEnter);
 			}
 
-
-		} while(redo);	
-		//離開售票
+		} while (redo);
+		// 離開售票
 		System.out.println("感謝您的使用，再見！");
 
-		//Recycle
+		// Recycle
 		scanner.close();
 	}
 

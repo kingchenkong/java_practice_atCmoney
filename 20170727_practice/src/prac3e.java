@@ -1,3 +1,4 @@
+
 //題目
 //陣列實習題目三：多維陣列
 //
@@ -31,41 +32,43 @@
 //(50, 60) 	->	(20, 25) 	距離：46.09
 //
 //Option: 1) Insert. 2) Output. -1) Quit?
-import java.util.*;
+import java.util.Arrays;
+import java.util.Scanner;
+
 public class prac3e {
 
 	public static void main(String[] args) {
-		//declare, initial
+		// declare, initial
 		Scanner scanner = new Scanner(System.in);
 		double distance = 0.00;
-		int[][] array2axisCoordinate = new int[3][5];	// 0: index, 1: x-coordinate, 2: y-coordinate
+		int[][] array2axisCoordinate = new int[3][5]; // 0: index, 1: x-coordinate, 2: y-coordinate
 		double[][] arrayDistance;
 		int maxScanX = 0, maxScanY = 0;
 		int minScanX = 0, minScanY = 0;
-		//process control
+		// process control
 		int option = 0;
 		boolean cycleOption = true;
 		int indexForCoordinate = 1;
-		//input
+		// input
 		int scanX = 0, scanY = 0;
 
-		//begin
-		while(cycleOption) {
+		// begin
+		while (cycleOption) {
 			System.out.println("\tOption==>\t|1) Insert.\t|2) Output.\t|-1) Quit?");
 			option = scanner.nextInt();
 
-			switch(option){
-			case 1:		//insert
-				//設定 -array2axisCoordinate[0] is 哪一row 已使用
-				for(int i = 0; i< array2axisCoordinate[0].length; i++) {
-					if(array2axisCoordinate[0][i] == 0) {
-						array2axisCoordinate[0][i] =  i + 1;
+			switch (option) {
+			case 1: // insert
+				// 設定 -array2axisCoordinate[0] is 哪一row 已使用
+				for (int i = 0; i < array2axisCoordinate[0].length; i++) {
+					if (array2axisCoordinate[0][i] == 0) {
+						array2axisCoordinate[0][i] = i + 1;
 						indexForCoordinate = i + 1;
 						break;
 
 					}
-					//array append
-					if(i == (array2axisCoordinate[0].length - 1) ) {
+					// array append
+					if (i == (array2axisCoordinate[0].length - 1)) {
 						int[] arrayForCopy;
 						// [0]
 						arrayForCopy = Arrays.copyOf(array2axisCoordinate[0], array2axisCoordinate[0].length + 3);
@@ -75,73 +78,72 @@ public class prac3e {
 						array2axisCoordinate[1] = Arrays.copyOf(arrayForCopy, arrayForCopy.length);
 						// [2]
 						arrayForCopy = Arrays.copyOf(array2axisCoordinate[2], array2axisCoordinate[2].length + 3);
-						array2axisCoordinate[2] = Arrays.copyOf(arrayForCopy, arrayForCopy.length);	
+						array2axisCoordinate[2] = Arrays.copyOf(arrayForCopy, arrayForCopy.length);
 					}
 				}
-				//scan
+				// scan
 				System.out.print("\n請輸入座標: ");
 				scanX = scanner.nextInt();
 				scanY = scanner.nextInt();
 				array2axisCoordinate[1][indexForCoordinate - 1] = scanX;
-				if(scanX >= maxScanX) {
+				if (scanX >= maxScanX) {
 					maxScanX = scanX;
 				}
-				if(scanX <= minScanX) {
+				if (scanX <= minScanX) {
 					minScanX = scanX;
 				}
 
 				array2axisCoordinate[2][indexForCoordinate - 1] = scanY;
-				if(scanX >= maxScanX) {
+				if (scanX >= maxScanX) {
 					maxScanY = scanY;
 				}
-				if(scanX <= minScanX) {
+				if (scanX <= minScanX) {
 					minScanY = scanY;
 				}
 				break;
 
-			case 2:		//output
-				//var
+			case 2: // output
+				// var
 				int x1 = 0, x2 = 0;
 				int y1 = 0, y2 = 0;
 				int alreadyNewCount = 0;
 
-				for(int i = 0; i < array2axisCoordinate[0].length; i++ ) {
-					if(array2axisCoordinate[0][i] == 0) {
-						alreadyNewCount = i ;
+				for (int i = 0; i < array2axisCoordinate[0].length; i++) {
+					if (array2axisCoordinate[0][i] == 0) {
+						alreadyNewCount = i;
 						break;
 					} else {
 						alreadyNewCount = array2axisCoordinate[0].length;
 					}
 				}
-				arrayDistance = new double[alreadyNewCount] [];
+				arrayDistance = new double[alreadyNewCount][];
 				double[] arrayMinDistance = new double[alreadyNewCount];
 				int[] arrayMostClosePointIndex = new int[alreadyNewCount];
 
-
-				double tempD =  Math.sqrt( Math.pow( (maxScanX-minScanX), 2) + Math.pow( (maxScanY-minScanY), 2) );
+				double tempD = Math.sqrt(Math.pow((maxScanX - minScanX), 2) + Math.pow((maxScanY - minScanY), 2));
 
 				Arrays.fill(arrayMinDistance, tempD);
 
 				System.out.print("");
 
-				//求arrayDistance
-				for(int i = 0; i < alreadyNewCount; i++) {
-					//建立需要的array數量
-					//					arrayDistance[i] = new double[array2axisCoordinate[0].length - i - 1]; 
-					arrayDistance[i] = new double[alreadyNewCount]; 
+				// 求arrayDistance
+				for (int i = 0; i < alreadyNewCount; i++) {
+					// 建立需要的array數量
+					// arrayDistance[i] = new double[array2axisCoordinate[0].length - i - 1];
+					arrayDistance[i] = new double[alreadyNewCount];
 
-					//					for(int j = i + 1; j < array2axisCoordinate[0].length; j++) {
-					for(int j = 0; j < alreadyNewCount; j++) {
+					// for(int j = i + 1; j < array2axisCoordinate[0].length; j++) {
+					for (int j = 0; j < alreadyNewCount; j++) {
 
 						x1 = array2axisCoordinate[1][i];
 						x2 = array2axisCoordinate[1][j];
 						y1 = array2axisCoordinate[2][i];
 						y2 = array2axisCoordinate[2][j];
-						distance = Math.sqrt( Math.pow( (x2-x1), 2) + Math.pow( (y1-y2), 2) );
-						//						arrayDistance[i][j - i - 1] = distance;
+						distance = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y1 - y2), 2));
+						// arrayDistance[i][j - i - 1] = distance;
 						arrayDistance[i][j] = distance;
 
-						if( (distance < arrayMinDistance[i]) && (i!=j) ) {
+						if ((distance < arrayMinDistance[i]) && (i != j)) {
 							arrayMinDistance[i] = distance;
 							arrayMostClosePointIndex[i] = j;
 						}
@@ -149,16 +151,17 @@ public class prac3e {
 				}
 
 				System.out.println("**************************************");
-				for(int j = 0; j < alreadyNewCount; j++) {
+				for (int j = 0; j < alreadyNewCount; j++) {
 					System.out.printf("( %3d, %3d ) ->\t", array2axisCoordinate[1][j], array2axisCoordinate[2][j]);
-					System.out.printf("最近的點: ( %3d, %3d )\t", array2axisCoordinate[1][ arrayMostClosePointIndex[j] ], array2axisCoordinate[2][ arrayMostClosePointIndex[j ]]);
+					System.out.printf("最近的點: ( %3d, %3d )\t", array2axisCoordinate[1][arrayMostClosePointIndex[j]],
+							array2axisCoordinate[2][arrayMostClosePointIndex[j]]);
 					System.out.printf(" 最短距離: %8.2f\n", arrayMinDistance[j]);
 				}
 				System.out.println("**************************************");
 
 				break;
 
-			case -1:		//quit
+			case -1: // quit
 				cycleOption = false;
 				break;
 			default:
@@ -167,7 +170,7 @@ public class prac3e {
 		}
 		System.out.println("is Over.");
 
-		//recycle
+		// recycle
 		scanner.close();
 	}
 

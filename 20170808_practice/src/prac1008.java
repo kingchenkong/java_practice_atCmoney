@@ -38,52 +38,75 @@ public class prac1008 {
 
 
 	public static Scanner scanner = new Scanner(System.in);
-
 	public static void main(String[] args) {
+		
 		int[] arrP = new int[10];
 		Arrays.fill(arrP, -1);
-		int indexArrP = 0;
-
+		int nextIndexArrP = 0;
+		int option = 0;
 
 		do {
-			if(indexArrP == arrP.length - 1) {
-				arrP = Arrays.copyOf(arrP, arrP.length * 2 );
-				System.out.println("array append.");
-				
-			}
-			System.out.println("請輸入成績 : ");
-			arrP[indexArrP] = scanner.nextInt();
-			if(arrP[indexArrP] == -1) {
+			System.out.print("\nOption: 1) Add. 2) Minimum. -1) Quit: ");
+			option = scanner.nextInt();
+
+			switch(option) {
+			case 1:
+				do {
+					// append array
+					if(nextIndexArrP == arrP.length - 1) {
+						arrP = Arrays.copyOf(arrP, arrP.length * 2 );
+						System.out.println("array append.");	
+					}
+
+					// input
+					System.out.println("請輸入成績 : ");
+					arrP[nextIndexArrP] = scanner.nextInt();
+
+					// quit
+					if(arrP[nextIndexArrP] == -1) {
+						break;
+					} else if(arrP[nextIndexArrP] < 0) {
+						System.out.println("--> Error. <--");
+					} else {
+						nextIndexArrP++;
+					}
+				} while(true);
 				break;
+
+			case 2:
+				// 判斷 陣列有無資料
+				if(arrP[0] == -1) {
+					System.out.println("--> 未輸入資料 <--");
+				} else {
+					System.out.println("minimum : " + RecursiveMinimum( arrP, nextIndexArrP ) );
+				}
+				break;
+
+			case -1:
+				System.out.println("結束");
+				System.exit(0);
+				break;
+
+			default:
+				System.out.println("--> Error.<--");
 			}
-			indexArrP++;
+
 		} while(true);
-
-		//test
-		System.out.println("arrP = >");
-		for(int i = 0; i < arrP.length; i++) {
-			if(arrP[i] != -1) {
-			System.out.println(arrP[i]);
-			} else {
-				break;
-				
-			}
-		}
-
-
-
-
-
-
-
-
 
 	}
 	// function
 	public static int RecursiveMinimum (int a[], int n) {
-
-
-		return 0;
+		int index = n - 1;
+		//只有一筆資料
+		if( n <= 1) {
+			return a[index];
+		}
+		//有兩筆以上資料
+		int min = RecursiveMinimum (a, n - 1);
+		if(a[index] < min) {
+			return a[index];
+		} else {
+			return min;
+		}
 	}
-
 }

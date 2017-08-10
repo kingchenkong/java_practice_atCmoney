@@ -79,13 +79,14 @@ public class Prac009A {
 	// - 流程
 	// 輸入硬幣
 	public static void initCoin(int[] arr){
-		System.out.println(" '1' 元硬幣個數：");
-		arr[0] = sc.nextInt();
-		System.out.println(" '5' 元硬幣個數：");
-		arr[1] = sc.nextInt();
-		System.out.println(" '10' 元硬幣個數：");
-		arr[2] = sc.nextInt();
-
+			for(int i = 0; i < arr.length; i++) {
+				System.out.println(" '" + (i > 0? 5*i: 1) + "' 元硬幣個數：");
+				arr[i] = sc.nextInt();
+				if(arr[i] < 0) {
+					printStatusBar("Input Error.");
+					i -= 1;
+				}
+			}
 	}
 	// 主選單
 	public static void mainOption() {
@@ -189,7 +190,6 @@ public class Prac009A {
 // class
 //#######
 class CCalculator{
-	public static Scanner sc = new Scanner(System.in);
 	private int coin10 = 0;
 	private int coin5 = 0;
 	private int coin1 = 0;
@@ -200,9 +200,10 @@ class CCalculator{
 		coin10 = arr[2];
 		coin5 = arr[1];
 		coin1 = arr[0];
-		System.out.println("init 1  元硬幣  : " + coin1 + " 個");
-		System.out.println("init 5  元硬幣  : " + coin5 + " 個");
-		System.out.println("init 10 元硬幣  : " + coin10 + " 個");
+		//
+//		System.out.println("init 1  元硬幣  : " + coin1 + " 個");
+//		System.out.println("init 5  元硬幣  : " + coin5 + " 個");
+//		System.out.println("init 10 元硬幣  : " + coin10 + " 個");
 
 	}
 	// (b) 定義public int[] change(int amount)函數，amount為欲兌換的金額，請將個硬幣數量放入陣列中後傳回。

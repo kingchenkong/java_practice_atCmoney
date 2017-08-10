@@ -18,7 +18,7 @@ public class PracOnClass {
 	public static void show(int a) {
 		return;
 	}
-	public static int show(double a) {
+	public static int show(double a, int a1) {
 		return 1;
 	}
 

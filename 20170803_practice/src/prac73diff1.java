@@ -52,6 +52,8 @@ public class prac73diff1 {
 					}
 				}
 			} while (redo);
+			
+			//判斷 閏年
 			boolean isLeap = false;
 			boolean yearIsOk = false, monthIsOk = false, dayIsOk = false;
 			int[] arrMonthDays = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };

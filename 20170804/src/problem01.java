@@ -65,7 +65,6 @@ public class problem01 {
 		showArray(arrayInit);
 
 		do {
-
 			// 簽注？
 			do {
 				System.out.println("\n1) 簽注 2) 終止: ");
@@ -148,7 +147,20 @@ public class problem01 {
 						break;
 					}
 				} while (true);
+				
 				showArray(arrayForRandom);
+				// test
+				// 頭獎
+				arrayForRandom = arrayThisRoundNum;
+				// 二獎 
+				arrayThisRoundNum = null;
+				arrayForRandom = null;
+				int[] arr0 = { 5, 6, 7, 8, 9};
+				int[] arr1 = { 0, 0, 7, 8, 9};
+				
+				arrayThisRoundNum  = arr0;
+				arrayForRandom = arr1;
+				// 三獎
 
 				if (Match(arrayForRandom, arrayThisRoundNum) == 1) {
 					get1 = true;
@@ -201,8 +213,8 @@ public class problem01 {
 				}
 
 			} else if (get3) {
-				if (bingo2Count < 100) {
-					bingoIncome = arrayInit[0] / 100 * bingo2Count;
+				if (bingo3Count < 100) {
+					bingoIncome = arrayInit[0] / 100 * bingo3Count;
 					arrayInit[0] -= bingoIncome;
 					arrayInit[1] += bingoIncome;
 					System.out.println("您總共得到 " + bingoIncome + "元");
@@ -220,7 +232,10 @@ public class problem01 {
 			} else {
 				arrayInit[0] = (int) ((double) arrayInit[0] * 1.06);
 			}
-
+			//test
+			showArray(arrayInit);
+			System.out.println("------------------------");
+			
 		} while (true);
 
 	}
@@ -294,3 +309,8 @@ public class problem01 {
 		}
 	}
 }
+
+
+
+
+

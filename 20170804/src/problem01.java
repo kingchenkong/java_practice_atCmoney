@@ -149,18 +149,6 @@ public class problem01 {
 				} while (true);
 				
 				showArray(arrayForRandom);
-				// test
-				// 頭獎
-				arrayForRandom = arrayThisRoundNum;
-				// 二獎 
-				arrayThisRoundNum = null;
-				arrayForRandom = null;
-				int[] arr0 = { 5, 6, 7, 8, 9};
-				int[] arr1 = { 0, 0, 7, 8, 9};
-				
-				arrayThisRoundNum  = arr0;
-				arrayForRandom = arr1;
-				// 三獎
 
 				if (Match(arrayForRandom, arrayThisRoundNum) == 1) {
 					get1 = true;
@@ -310,7 +298,18 @@ public class problem01 {
 	}
 }
 
-
+////test
+//// 頭獎
+//arrayForRandom = arrayThisRoundNum;
+//// 二獎 
+//arrayThisRoundNum = null;
+//arrayForRandom = null;
+//int[] arr0 = { 5, 6, 7, 8, 9};
+//int[] arr1 = { 0, 0, 7, 8, 9};
+//
+//arrayThisRoundNum  = arr0;
+//arrayForRandom = arr1;
+//// 三獎
 
 
 

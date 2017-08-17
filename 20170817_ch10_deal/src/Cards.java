@@ -2,11 +2,11 @@
 public class Cards {
 	// Attributes
 	protected int[] poker;
-	protected int retain;
+	protected int remain;
 	
 	public Cards() {
 		this.poker = new int[52];
-		this.retain = 0;
+		this.remain = 0;
 	}
 	
 	public void newCards(){
@@ -14,15 +14,15 @@ public class Cards {
 		for(int i = 0; i < this.poker.length; i++) {
 			this.poker[i] = i;
 		}
-		this.retain = 52;
+		this.remain = 52;
 		
 	}
 	public int getCard() {
-		if(this.retain == 0) {
+		if(this.remain == 0) {
 			this.newCards();
 			System.out.println("\n-----new Cards------");
 		}
-		this.retain -= 1;
-		return this.poker[this.retain];
+		this.remain -= 1;
+		return this.poker[this.remain];
 	}
 }

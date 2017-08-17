@@ -10,31 +10,31 @@ public class ShuffleCards extends Cards{
 
 	public int remainCards(){
 		//回傳剩餘的卡牌數量
-		return this.retain;
+		return this.remain;
 	}
 	@Override public int getCard(){
 		//實作getCards方法，隨機從卡牌中發一張牌，沒牌請自動產生一副新牌
-		if(this.retain == 0) {
+		if(this.remain == 0) {
 			this.newCards();
 			System.out.println("\n-----new Cards------");
 		}
 		int returnVal = 0;
-			int random =(int)(Math.random() * this.retain);
+			int random =(int)(Math.random() * this.remain);
 			returnVal = this.poker[random];
 			this.poker[random] = -1;
-			int temp = this.poker[this.retain - 1];
-			this.poker[this.retain - 1] = this.poker[random];
+			int temp = this.poker[this.remain - 1];
+			this.poker[this.remain - 1] = this.poker[random];
 			this.poker[random] = temp;
 			
-		this.retain -= 1;
+		this.remain -= 1;
 		return returnVal;
 	}
 	@Override public String toString(){
 		//列出剩餘的牌之花色與數字
-		String returnStr = "";
+		String returnStr = String.format("remain %d sheets\n", this.remain);
 		int getCount = 0;
 		for(int i = 0; i < 52 ; i++) {
-			if(getCount == this.retain) {
+			if(getCount == this.remain) {
 				break;
 			}
 			if(i != 0 && i % 4 == 0) {

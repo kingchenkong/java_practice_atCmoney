@@ -61,7 +61,7 @@ public class TestFileSystem {
 	public static void main(String[] args) {
 
 		//test
-		test();
+//		test();
 
 		//main
 		mainOperation();
@@ -75,9 +75,18 @@ public class TestFileSystem {
 			String optionStr = sc.nextLine();
 			//ls：檢視所在目錄底下的所有檔名與目錄夾名稱。
 			if(optionStr.equals("ls")) {
+				int dirCount = 0;
+				int fileCount = 0;
 				if(posDir.getItemCount() != 0) {
-					for(int i = 0; i < posDir.getItemCount(); i++)
+					for(int i = 0; i < posDir.getItemCount(); i++) {
 						System.out.println(posDir.getDirList()[i].getName());
+						if(posDir.getDirList()[i].getClass().getSimpleName().equals("Directory")) {
+							dirCount += 1;
+						} else {
+							fileCount += 1;
+						}
+					}
+					System.out.printf("此目錄 有 %2d 個檔案, %2d 個 資料夾\n", fileCount, dirCount);	
 				} else {
 					System.out.println("此目錄 是空的");
 				}
@@ -112,9 +121,20 @@ public class TestFileSystem {
 					} else if(strSplit[0].equals("search")) {	//search <關鍵字>：根據關鍵字搜尋目錄夾與其子目錄夾中所有包含該關鍵字的檔案與資料夾（大小寫不分	）
 						// dev this...
 						//
-						
-						
-						
+						String[] arrStr = posDir.search(strSplit[1]);
+
+						int count = 0;
+						if(arrStr[0] != null) {
+							for(int i = 0; i < arrStr.length; i++) {
+								if(arrStr[i] != null) {
+									System.out.println(arrStr[i]);
+									count += 1;
+								}
+							}
+							System.out.println("共 " + count + " 個符合項目");
+						} else {
+							System.out.println("無 符合 之 項目");
+						}
 					} else {
 						System.out.println("查無此指令.");
 					}
@@ -220,9 +240,9 @@ public class TestFileSystem {
 		System.out.println(opfiles100023445.nameContainKeyWord("pfiles10002344"));
 		System.out.println("-----------------------------------");
 
-		String[] arrStr = root.search("opb");
+		String[] arrStr = root.search("op");
 
-		System.out.println("--------------search 'opb' : ");
+		System.out.println("--------------search 'op' : ");
 		if(arrStr[0] != null) {
 			for(int i = 0; i < arrStr.length; i++) {
 				if(arrStr[i] != null) {

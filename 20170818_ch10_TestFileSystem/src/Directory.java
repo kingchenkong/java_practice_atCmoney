@@ -43,10 +43,11 @@ public class Directory extends FileEntity {
 				if(this.dirList[i].nameContainKeyWord(keyword)) {
 					arrStr[arrCount] = this.dirList[i].getName();
 					arrNameAndPath[arrCount] = this.dirList[i].getPath();
-
+					arrCount += 1;
 				}
 			}
-			return arrStr;
+//			return arrStr;
+			return arrNameAndPath;
 		} 
 		
 		for(int i = 0; i < this.itemCount; i++) {
@@ -55,26 +56,30 @@ public class Directory extends FileEntity {
 				String[] result= dir.search(keyword);
 				for(int j = 0; j < result.length; j++) {
 					if(result[j] != null) {
-					arrStr[arrCount++] = result[j];
+					arrStr[arrCount] = result[j];
+					arrNameAndPath[arrCount] = result[j];
+					arrCount += 1;
 					}
 				}
 			}
 			if(this.dirList[i].nameContainKeyWord(keyword)) {
 				arrStr[arrCount] = this.dirList[i].getName();
 				arrNameAndPath[arrCount] = this.dirList[i].getPath();
+				arrCount += 1;
 			}
 		}
-		return arrStr;
+//		return arrStr;
+		return arrNameAndPath;
 	}
 	public boolean isTerminal() {
 		int dirCount = 0;
 		if(this.getPath() == null) 
 			return false;
 		
-		System.out.println("now in " + this.getName());
+//		System.out.println("now in " + this.getName());
 		for(int i = 0; i < this.itemCount; i++) {
 			if(this.dirList[i].getClass().getSimpleName().equals("Directory")) {
-				System.out.println(this.dirList[i].getName() + " is Directory");
+//				System.out.println(this.dirList[i].getName() + " is Directory");
 				dirCount += 1;
 			}
 		}

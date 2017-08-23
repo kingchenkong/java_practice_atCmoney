@@ -11,7 +11,7 @@ public class Practice1105 {
 		FileWriter fw = new FileWriter("src//text3.txt");
 		int num;
 		String str1;
-		while( (num = fr.read(cbuf)) != -1) {
+		while(fr.read(cbuf) != -1) {
 			fw.write(cbuf);
 		}
 		fr.close();

@@ -95,12 +95,13 @@ public class TestLoginSystem {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException{
 
-		setLoadingFile();
 
 		// test
 		test();
+
+		//		setLoadingFile();
 		// main menu
-		menu();
+				menu();
 
 	}
 	// function
@@ -145,9 +146,20 @@ public class TestLoginSystem {
 	}
 	public static void test() {
 
-
-
+		// IDCode
+		System.out.println("J122559887 is " + IDCode.isValid("J122559887") );
+		
+		// Date
+		Date date1 = new Date("1990/7/3");
+		date1.output();
+//		System.out.println();
+		
+		// MemberData
+		MemberData md1 = new MemberData("10", "陳維漢", "J122559887", "1990/7/3", "0975861709");
+		System.out.println("編號 \t姓名 \t身分證 \t\t生日 \t\t電話");
+		System.out.println("==============================================================");
+		md1.output();
+		
 	}
-
 
 }

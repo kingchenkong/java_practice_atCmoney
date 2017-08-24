@@ -1,0 +1,18 @@
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="msapplication-config" content="none"/>
+<link rel="shortcut icon" href="https://media.flaticon.com/img/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="https://media.flaticon.com/img/apple-icon-57x57-precomposed.png" />
+<link rel="apple-touch-icon-precomposed" sizes="60x60" href="https://media.flaticon.com/img/apple-icon-60x60-precomposed.png" />
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="https://media.flaticon.com/img/apple-icon-72x72-precomposed.png" />
+<link rel="apple-touch-icon-precomposed" sizes="76x76" href="https://media.flaticon.com/img/apple-icon-76x76-precomposed.png" />
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="https://media.flaticon.com/img/apple-icon-114x114-precomposed.png" />
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="https://media.flaticon.com/img/apple-icon-120x120-precomposed.png" />
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://media.flaticon.com/img/apple-icon-144x144-precomposed.png" />
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="https://media.flaticon.com/img/apple-icon-152x152-precomposed.png" />
+
+<link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/nkhjnpgcnmdpeikbeegmibjcfjpamjnp">
+
+<title>Free vector icons - SVG, PSD, PNG, EPS & Icon Font - Thousands of free icons</title>

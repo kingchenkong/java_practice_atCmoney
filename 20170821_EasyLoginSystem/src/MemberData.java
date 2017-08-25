@@ -16,11 +16,17 @@ public class MemberData {
 		this.date = new Date(date);
 		if(MemberData.phoneIsValid(ph))
 			this.phone = ph;
-		this.data = String.format("%03d \t%3s \t%s \t%s \t%s", this.No, this.name, this.ID.getIDStr(), this.date.getDate(), this.phone);
+		this.data = String.format("%03d\t%3s\t%s\t%s\t\t%s", this.No, this.name, this.ID.getIDStr(), this.date.getDate(), this.phone);
 	}	
+	// setter
+	
+	
 	// getter
 	public String getData() {
 		return this.data;
+	}
+	public int getNo() {
+		return this.No;
 	}
 	// output
 	public void output() {

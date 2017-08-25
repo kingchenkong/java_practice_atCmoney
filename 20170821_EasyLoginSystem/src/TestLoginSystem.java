@@ -90,76 +90,275 @@ import java.util.*;
 public class TestLoginSystem {
 
 	static Scanner sc = new Scanner(System.in);
-	static FileReader fr;
-	static FileWriter fw;
+	static String[] arrFileStr = new String[101];
+	static MemberData[] mData = new MemberData[101];
+	static final String dbTitle = "編號 \t姓名 \t身分證 \t\t生日 \t\t電話";
 
 	public static void main(String[] args) throws FileNotFoundException, IOException{
-
-
 		// test
-		test();
+		//		test();
 
-		//		setLoadingFile();
 		// main menu
-				menu();
-
+		menu();
 	}
 	// function
-	public static void setLoadingFile() throws IOException, FileNotFoundException {
+	public static void menu() throws IOException, FileNotFoundException {
+		// set loading file
 		System.out.println("載入資料檔 : ");
-		String str = sc.nextLine();
-		if(!str.equals("DataBase.txt")) {
-			str = "DataBase.txt";
+		String scanStr = sc.nextLine();
+		if(!scanStr.equals("DataBase.txt")) {
+			scanStr = "DataBase.txt";
 			System.out.println("File Not Found, \nloading default: DataBase.txt");
 		}
-		fr = new FileReader("src//" + str);
-		fw = new FileWriter("src//" + str);
-	}
-	public static void menu() {
+		// load in mData
+		FileReader fr = new FileReader("src//" + scanStr);
+		BufferedReader bufR = new BufferedReader(fr);
+		String readStr;
+		bufR.skip(17);
+		//		String[] arrLoadInStr = null;
+		while( (readStr = bufR.readLine()) != null) {
+			String[] arrLoadInStr = readStr.split("\t");
+			for(int i = 0; i < arrLoadInStr.length; i++) {
+				//				System.out.println(arrLoadInStr[i]);
+				//				System.out.println("----------");
+			}
+			int dataNo = Integer.parseInt(arrLoadInStr[0]);
+			mData[dataNo] = new MemberData(arrLoadInStr[0], arrLoadInStr[1], arrLoadInStr[2], arrLoadInStr[3], arrLoadInStr[4]);
+		}
+		bufR.close();
+		fr.close();
+
 		do {
+			// file stream
 			System.out.print("選項：1)檢視全部, 2)新增, 3)刪除, 4)修改, 5)篩選編號, -1) 結束? ");
-			int option = sc.nextInt();
-			switch(option) {
+			int optionNum = 0; // 預設為 "Illegal input."
+			String option = sc.nextLine();
+			if(isInt(option)) {
+				optionNum = Integer.parseInt(option);
+			}
+			switch(optionNum) {
 			case -1:
 				System.out.println(" Bye~! ");
+				fr.close();
+				// be sure all close
+				FileWriter fw = new FileWriter("src//" + scanStr);
+				BufferedWriter bufW = new BufferedWriter(fw);
+				for(int i = 0; i < 101; i++) {
+					if(mData[i] != null) {
+						bufW.write(mData[i].getData());
+						bufW.newLine();
+					}
+				}
+				bufW.flush();
+				bufW.close();
+				fw.close();
 				return ;
 			case 1:
-				System.out.println(" 檢視全部 ");
+				System.out.println(dbTitle);
+				System.out.println("==============================================================");
+				for(int i = 0; i < mData.length; i++) 
+					if(mData[i] != null) 
+						mData[i].output();
 				break;
 			case 2:
-				System.out.println(" 新增 ");
+				newData("");
 				break;
 			case 3:
-				System.out.println(" 刪除 ");
+				deleteData();
 				break;
 			case 4:
-				System.out.println(" 修改 ");
+				modifyData();
 				break;
 			case 5:
-				System.out.println(" 篩選編號 ");
+				int sNo = 0;
+				System.out.println("輸入起始編號： ");
+				String scanStartNo = sc.nextLine();
+				if(isInt(scanStartNo)) 
+					sNo = Integer.parseInt(scanStartNo);
+				int eNo = 0;
+				System.out.println("輸入結束編號： ");
+				String scanEndNo = sc.nextLine();
+				if(isInt(scanEndNo))
+					eNo = Integer.parseInt(scanEndNo);
+				System.out.println("輸出資料檔名：");
+				String scanFileName = sc.nextLine();
+				//如果沒有副檔名
+				String[] arrSplit = scanFileName.split("\\.");
+				if(arrSplit.length < 2) {
+					scanFileName += ".txt";
+				}
+				System.out.println(scanFileName);
+				fw = new FileWriter("src//" + scanFileName);
+				bufW = new BufferedWriter(fw);
+				bufW.write(dbTitle);
+				bufW.newLine();
+				for(int i = sNo; i <=eNo; i++) {
+					if(mData[i] != null) {
+						bufW.write(mData[i].getData());
+						bufW.newLine();
+					}
+				}
+				bufW.flush();
+				System.out.println("檔案寫入成功！");
+				bufW.close();
+				fw.close();
 				break;
-
 			default:
-				System.out.println("Input Error.");
+				System.out.println("Illegal input.");
 			}
+
 		} while(true);
 	}
-	public static void test() {
 
+	public static void modifyData() {
+		System.out.print("輸入 欲修改之 編號： ");
+		String scanNo = sc.nextLine();
+		if(isExistData(scanNo)) {
+			int mi = Integer.parseInt(scanNo);
+			MemberData tempMD = mData[mi];
+			mData[mi] = null;
+			if(!newData(scanNo)) {
+				// 修改失敗
+				System.out.println("修改失敗, 復原 原資料");
+				mData[mi] = tempMD;
+			}
+		}
+		return;
+	}
+	public static boolean isExistData(String strNo) {
+		if(isInt(strNo)) {
+			int no = Integer.parseInt(strNo);
+			if(no >= 0 && no <= 100) {
+				if(mData[no] != null) {
+					return true;
+				} else {
+					System.out.println("Illegal input. - 該 編號 尚無資料");
+				}
+			} else {
+				System.out.println("Illegal input. - 編號 超出範圍");
+			}
+		} else {
+			System.out.println("Illegal input. - 格式錯誤");
+		}
+		return false;
+	}
+	public static void deleteData() {
+		System.out.print("輸入 欲刪除之 編號： ");
+		String scanNo = sc.nextLine();
+		if(isExistData(scanNo)) {
+			mData[Integer.parseInt(scanNo)] = null;
+			System.out.println("刪除成功！！");
+		}
+		return;
+	}
+	public static boolean newData(String modifyNo) {
+		String[] arrNMD = new String[5];
+		System.out.println("欲離開 請於任何輸入 輸入 '-1'");
+		if(modifyNo.equals("")) {
+			do {
+				System.out.print("編號 ( 介於 0 - 100 ) ：");
+				String scanNo = sc.nextLine();
+				if(scanNo.equals("-1")) {
+					System.out.println(" 取消輸入 ");
+					return false;
+				}
+				if(isInt(scanNo)) {
+					int no = Integer.parseInt(scanNo);
+					if(no >= 0 && no <= 100) {
+						if(mData[no] == null) {
+							arrNMD[0] = String.format("%03d", no);
+							System.out.println("");
+							break;
+						} else {
+							System.out.println("Illegal input. - 編號重複");
+						}
+					} else {
+						System.out.println("Illegal input. - 超過編號範圍");
+					}
+				}
+				System.out.println("Illegal input. - 格式錯誤");
+			} while(true);
+		} else {
+			arrNMD[0] = modifyNo;
+		}
+		// 姓名：林瑞龍
+		System.out.print("姓名： ");
+		arrNMD[1] = sc.nextLine();
+		if(arrNMD[1].equals("-1")) {
+			System.out.println(" 取消輸入 ");
+			return false;
+		}
+		// 身分證：A123456789
+		do {
+			System.out.print("身分證： ");
+			String scanID = sc.nextLine();
+			if(scanID.equals("-1")) {
+				System.out.println(" 取消輸入 ");
+				return false;
+			}
+			if(IDCode.isValid(scanID)) {
+				arrNMD[2] = scanID;
+				break;
+			} else {
+				System.out.println("Illegal input. - 格式錯誤");
+			}
+		} while(true);
+		// 生日（年/月/日）：1980 1 20
+		do {
+			System.out.print("生日（年/月/日： ");
+			String scanDate = sc.nextLine();
+			if(scanDate.equals("-1")) {
+				System.out.println(" 取消輸入 ");
+				return false;
+			}
+			if(Date.isExist(scanDate)) {
+				arrNMD[3] = scanDate;
+				break;
+			} else {
+				System.out.println("Illegal input. - 格式錯誤");
+			}
+		} while(true);
+		// 電話：0926232122
+		do {
+			System.out.print("電話： ");
+			String scanPh = sc.nextLine();
+			if(scanPh.equals("-1")) {
+				System.out.println(" 取消輸入 ");
+				return false;
+			}
+			if(isInt(scanPh)) {
+				arrNMD[4] = scanPh;
+				break;
+			} else {
+				System.out.println("Illegal input. - 格式錯誤");
+			}
+		} while(true);
+		// 進入 陣列
+		mData[Integer.parseInt(arrNMD[0])] = new MemberData(arrNMD[0], arrNMD[1], arrNMD[2], arrNMD[3], arrNMD[4]);
+		// 會員新增成功!
+		System.out.println("會員新增成功!");
+		return true;
+	}
+	public static boolean isInt(String str) {
+		try {
+			Integer.parseInt(str);
+		} catch(NumberFormatException nfe) {
+			return false;
+		}
+		return true;
+	}
+	public static void test() {
 		// IDCode
 		System.out.println("J122559887 is " + IDCode.isValid("J122559887") );
-		
 		// Date
 		Date date1 = new Date("1990/7/3");
 		date1.output();
-//		System.out.println();
-		
 		// MemberData
 		MemberData md1 = new MemberData("10", "陳維漢", "J122559887", "1990/7/3", "0975861709");
 		System.out.println("編號 \t姓名 \t身分證 \t\t生日 \t\t電話");
 		System.out.println("==============================================================");
 		md1.output();
-		
+
 	}
 
 }

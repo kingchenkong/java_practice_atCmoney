@@ -1,0 +1,42 @@
+
+public class pra6g {
+    
+    public static void main(String[] args) {
+        int card[] = new int [52];
+        for(int i=0; i<52; i++) {	//一副撲克牌牌組
+            card[i] = i;
+        }
+        
+        System.out.println("原牌組");
+        String s = "print()";
+        
+        int get[] = new int [5];
+        for(int n=0; n<get.length; n++) {
+            get[n] = shuffle(card, card.length);
+        }
+        
+        System.out.println("所拿到的牌組");
+        System.out.println(get);
+        
+    }
+    public static int shuffle(int a[], int count) {  //洗牌抽牌   //傳值
+        int r = 0;
+        for(int i=0; i<count; i++) {
+            r = (int)(Math.random()*count);
+            int temp = a[r];
+            a[r] = a[i];
+            a[i] = temp;
+        }
+        return a[r];
+    }
+    public String toString() {  //列印
+        String str[]= {"黑桃","梅花","方塊","愛心"};
+        String s = "";	
+        for(int i=0; i<52; i++) {
+            s += str[i % 13]+(i%4+1)+"\n";
+        }
+        System.out.print("");
+        return s;
+    }
+    
+}

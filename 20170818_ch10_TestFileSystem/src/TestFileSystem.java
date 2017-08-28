@@ -59,18 +59,14 @@ public class TestFileSystem {
 	static File fileAtMyDocuments002 = new File("fileAtMyDocuments002.file",myDocuments);
 
 	public static void main(String[] args) {
-
 		//test
 //		test();
-
 		//main
 		mainOperation();
-
 	}
 	static void mainOperation() {
 		// initial
 		init();
-
 		do {
 			String optionStr = sc.nextLine();
 			//ls：檢視所在目錄底下的所有檔名與目錄夾名稱。
@@ -105,24 +101,20 @@ public class TestFileSystem {
 				if(strSplit.length > 1 && !strSplit[1].equals("")) {
 					if(strSplit[0].equals("cd")) {				//cd <資料夾名稱>：進入某一個資料夾當中。
 						dirExistAndCd(strSplit[1], true);
-
 					} else if(strSplit[0].equals("touch")) {		//touch <檔名>：建立一個空檔案(註：並非真的建立檔案，僅僅是新增檔名而已)
 						if(nameIsDuplicated(strSplit[1] + ".file"))
 							System.out.println("檔名重複, 此檔案已存在");
 						else
 							new File(strSplit[1] + ".file", posDir); 
-
 					} else if(strSplit[0].equals("mkdir")) {		//mkdir <資料夾名稱>：建立一個新的資料夾。
 						if(nameIsDuplicated(strSplit[1]))
 							System.out.println("檔名重複, 此檔案已存在");
 						else
 							new Directory(strSplit[1], posDir); 
-
 					} else if(strSplit[0].equals("search")) {	//search <關鍵字>：根據關鍵字搜尋目錄夾與其子目錄夾中所有包含該關鍵字的檔案與資料夾（大小寫不分	）
 						// dev this...
 						//
 						String[] arrStr = posDir.search(strSplit[1]);
-
 						int count = 0;
 						if(arrStr[0] != null) {
 							for(int i = 0; i < arrStr.length; i++) {

@@ -4,7 +4,6 @@ class FileEntity {
 	private Directory parent;	//代表上一層目錄；如果是此資料夾為根目錄，便設為NULL
 	private String name;		//資料夾或檔案名稱
 
-
 	// Constructor
 	public FileEntity(String n) {
 		this.name = n;
@@ -19,7 +18,6 @@ class FileEntity {
 		this.parent = dir;
 		return true; // 搬移成功
 	}
-
 	// - getter
 	public Directory getParent() {
 		return this.parent;
@@ -28,7 +26,6 @@ class FileEntity {
 		//取得項目名稱
 		return this.name;
 	}
-
 	public String getPath(Directory p) {
 		// 取得當下路徑
 		String strPath = "";
@@ -56,7 +53,7 @@ class FileEntity {
 		char[] arrChKey = lowKey.toCharArray();
 		char[] arrChThis = thisName.toCharArray();
 		
-		for(int i = 0; i < arrChThis.length - keyword.length(); i++) {
+		for(int i = 0; i <= arrChThis.length - keyword.length(); i++) {
 			if(arrChThis[i] == arrChKey[0]) {
 				int count = 0;
 				for(int j = 0; j < arrChKey.length; j++) {

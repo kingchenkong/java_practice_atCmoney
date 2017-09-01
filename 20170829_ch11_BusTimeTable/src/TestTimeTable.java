@@ -81,22 +81,6 @@ public class TestTimeTable {
 		}
 		bufR.close();
 		fr.close();
-		//		System.out.println("#################################");
-		//		System.out.println("################lineTable#################");
-		//		for(int i = 0; i < linesCount; i++) {
-		//			if(lineTable[i] != null) {
-		//				//				// line
-		//				lineTable[i].output();
-		//				System.out.println();
-		//				// detail
-		//				//				for(int j = 0; j < lineTable[i].getListCount(); j++) {
-		//				//					lineTable[i].output();
-		//				//					lineTable[i].getList(j).output();;
-		//				//					System.out.println();
-		//				//				}
-		//			}
-		//		}
-		//		System.out.println("#################################");
 	}
 	// menu
 	public static void menu() throws IOException, FileNotFoundException {
@@ -156,11 +140,14 @@ public class TestTimeTable {
 		System.out.println("請輸入 支線： ");
 		arrScanStr[2] = sc.nextLine();
 
-
 		do {
 			System.out.println("請輸入 往(1 / 返(0： ");
 			arrScanStr[3] = sc.nextLine();
 		} while(isOneOrZero(arrScanStr[3]) == -1);
+		if(arrScanStr[3].equals("1"))
+			arrScanStr[3] = "往";
+		else 
+			arrScanStr[3] = "返";
 
 		System.out.println("請輸入 路線名稱： ");
 		arrScanStr[4] = sc.nextLine();
@@ -211,14 +198,14 @@ public class TestTimeTable {
 		int c = 0;
 		for(int i = 0; i < linesCount; i++) {
 			String[] arrS = lineTable[i].getData();
-			if(arrScanStr[1].equals(arrS[1]) && arrScanStr[2].equals(arrS[2])) {
+			if(arrScanStr[1].equals(arrS[1]) && arrScanStr[2].equals(arrS[2]) && arrScanStr[3].equals(arrS[3])) {
 				lineTable[i].setListLineDetail(arrScanStr);
 			} else {
 				c++;
 			}
 		}
 		if(c == linesCount) {
-			lineTable[linesCount].setLineData(arrScanStr);
+			lineTable[linesCount] = new BusLine(arrScanStr);
 			lineTable[linesCount].setListLineDetail(arrScanStr);
 			linesCount++;
 		}
@@ -229,23 +216,65 @@ public class TestTimeTable {
 			return i;
 		} catch(Exception e) {
 			System.out.println("input Error.");
-			//			sc.nextLine();
 		}
 		return -1;
-
 	}
 	public static int isOneOrZero(String str) {
 		int i = isInt(str);
 		if(i == 0 || i == 1)
 			return i;
-
 		return -1;
 	}
 	public static void printThisLine() {
-		System.out.println("print This Line.");
+		System.out.println("請輸入 路線編號： ");
+		String sc1 = sc.nextLine();
+		System.out.println("請輸入 支線： ");
+		String sc2 = sc.nextLine();
+		int c = 0;
+
+		for(int i = 0; i < linesCount; i++) {
+			String[] arrS = lineTable[i].getData();
+			if(sc1.equals(arrS[1]) && sc2.equals(arrS[2])) {
+				for(int j = 0; j < lineTable[i].getListCount(); j++) {
+					lineTable[i].output();
+					lineTable[i].getList(j).output();
+					System.out.println("");
+				}
+			} else {
+				c++;
+			}
+		}
+		if(c == linesCount)
+			System.out.println("No data matching");
+		return;
 	}
 	public static void deleteThisLine() {
-		System.out.println("delete This Line.");
+		System.out.println("請輸入 路線編號： ");
+		String sc1 = sc.nextLine();
+		System.out.println("請輸入 支線： ");
+		String sc2 = sc.nextLine();
+		int originalLC = linesCount;
+
+		for(int i = 0; i < linesCount; i++) {
+			String[] arrS = lineTable[i].getData();
+			if(sc1.equals(arrS[1]) && sc2.equals(arrS[2])) {
+				lineTable[i] = null;
+				for(int j = i; j < linesCount; j++) {
+					if(lineTable[j] == null && j < lineTable.length) {
+						lineTable[j] = lineTable[j+1];
+						lineTable[j+1] = null;
+					}
+				}
+				linesCount--;
+				i--;
+			} 
+		}
+		if(originalLC == linesCount)
+			System.out.println("No data matching");
+		else
+			System.out.println("刪除成功!!");
+		
+		return;
 	}
 	public static void export() throws IOException, FileNotFoundException{
 		//		System.out.println("export.");
@@ -298,37 +327,9 @@ public class TestTimeTable {
 				System.out.print("|" + arrLoadInStr[i] + "|");
 			}
 			System.out.println();
-
-			//放入 類別
-			//			timeTable[runsCount++] = new RunsData(arrLoadInStr);
-			//			timeTable[runsCount].company = arrLoadInStr[0];
-			//			timeTable[runsCount].pathNo = arrLoadInStr[1];
-			//			timeTable[runsCount].branchLine = arrLoadInStr[2].charAt(0);
-			//			if(arrLoadInStr[3].equals("往"))
-			//				timeTable[runsCount].toOrBack = true;
-			//			else
-			//				timeTable[runsCount].toOrBack = false;
-			//			timeTable[runsCount].pathName = arrLoadInStr[4];
-			//			timeTable[runsCount].stationName = arrLoadInStr[5];
-			//			timeTable[runsCount].rinsOrder = Integer.parseInt(arrLoadInStr[6]);
-			//			timeTable[runsCount].departureTime = Integer.parseInt(arrLoadInStr[7]);
-			//			boolean[] arrRunsOrNot = new boolean[7];
-			//			for(int j = 8; j < 15; j++) 
-			//				if(arrLoadInStr[j].equals("1"))
-			//					arrRunsOrNot[j-8] = true;
-			//				else
-			//					arrRunsOrNot[j-8] = false;
-			//			timeTable[runsCount].runsOrNot = arrRunsOrNot;
-			//			runsCount++;
 		}
 		bufR.close();
 		fr.close();
-
-		//		System.out.println("#################################");
-		//		// output
-		//		for(int i = 0; i < timeTable.length; i++) 
-		//			if(timeTable[i] != null) 
-		//				timeTable[i].output();		
 
 		// writer
 		System.out.println("輸出: " + writeFilePath + writeFileName);

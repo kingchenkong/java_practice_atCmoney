@@ -69,7 +69,8 @@ public class BusLine {
 	}
 	// output
 	public void output() {
-		System.out.print(this.getString());
+		String str = String.format("%5s %7s %3s %3s %25s", this.company, this.lineNo, this.branchLine, this.toOrBack, this.lineName);
+		System.out.print(str);
 	}
 	// function
 

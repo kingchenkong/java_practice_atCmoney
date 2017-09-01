@@ -1,8 +1,6 @@
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
 import java.awt.Graphics;
 //import java.awt.event.ActionEvent;
 //import java.awt.event.ActionListener;
@@ -63,7 +61,5 @@ public class CAircraft {
 		if(left1 > right2)
 			return false;
 		return true;
-
-
 	}
 }

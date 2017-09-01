@@ -6,14 +6,14 @@ public class TestTimeTable {
 	// static
 	public static Scanner sc = new Scanner(System.in);
 	static String readFilePath = "src//";
-	//	static String readFileName = "timetable.csv";
-	static String readFileName = "testtt.csv";
+	static String readFileName = "timetable.csv";
+	//	static String readFileName = "testtt.csv";
 	static String writeFilePath = "src//";
 	static String writeFileName = "output.csv";
 	static String firstLine = "---";
 	// object
 	static BusLine[] lineTable = new BusLine[100];
-	static RunsData[] timeTable = new RunsData[100];
+	//	static RunsData[] timeTable = new RunsData[100];
 	static int runsCount = 0;
 	static int linesCount = 0;
 
@@ -28,8 +28,7 @@ public class TestTimeTable {
 	// init
 	public static void init() throws IOException, FileNotFoundException {
 		System.out.print("載入資料檔: ");
-		//		String scanStr = sc.nextLine();
-		String scanStr = "a";
+		String scanStr = sc.nextLine();
 		// test
 		// 檔名 更正
 		if(scanStr != readFileName)
@@ -273,7 +272,7 @@ public class TestTimeTable {
 			System.out.println("No data matching");
 		else
 			System.out.println("刪除成功!!");
-		
+
 		return;
 	}
 	public static void export() throws IOException, FileNotFoundException{
@@ -338,7 +337,7 @@ public class TestTimeTable {
 		bufW.write(firstLine);
 		bufW.newLine();
 		for(int i = 0; i < runsCount; i++) {
-			bufW.write(timeTable[i].getData());
+			bufW.write(lineTable[i].getString());
 			bufW.newLine();
 		}
 		bufW.flush();

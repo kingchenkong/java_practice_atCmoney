@@ -8,7 +8,7 @@ public class PracOnClass {
 		//		CShape obj =	new CShape(); // 錯誤，抽象類別不能產生物件實體
 		CRect sh1 = new CRect(5.0,15.0);
 		CCircle sh2 = new CCircle(3.0);
-
+		
 		CShape arrShape[] = new CShape[4]; // 抽象型態的變數陣列
 		arrShape[0] = new CRect(10.0,20.0); // 變數參考子類別物件實體 
 		arrShape[1] = new CRect(5.0,15.0);

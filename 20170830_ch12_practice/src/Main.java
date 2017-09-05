@@ -12,15 +12,12 @@ public class Main {
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.add(gjp);
 		jf.setVisible(true);
-		
+
 		Timer timer = new Timer(100, new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				jf.repaint();
 			}
 		});
 		timer.start();
-		
-		
 	}
-
 }

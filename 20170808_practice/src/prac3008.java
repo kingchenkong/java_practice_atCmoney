@@ -64,7 +64,7 @@ public class prac3008 {
 	// function
 	public static int TestPalindrome (char a[], int leftEnd, int rightEnd) {
 		// '是的話傳回1' ， '否則傳回0' 
-		if(leftEnd == rightEnd) {
+		if(leftEnd >= rightEnd) {
 			return 1;
 		}
 		if(a[leftEnd] == a[rightEnd]) {

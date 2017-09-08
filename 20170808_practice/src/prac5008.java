@@ -34,6 +34,7 @@ public class prac5008 {
 	public static void main(String[] args) {
 
 		int[] arr = new int[10];
+//		int[] arr = { 20, 100, 19, 86, 85, 82, 56, -1, 0, 0};
 		int newDataPos = 0;
 
 		do {
@@ -75,7 +76,7 @@ public class prac5008 {
 				} while(true);
 
 				// print
-				System.out.println("after 'Sort' :");
+				System.out.println("before 'Sort' :");
 				for(int i = 0; i < arr.length; i++) {
 					System.out.print(arr[i] + ", ");
 				}
@@ -89,8 +90,8 @@ public class prac5008 {
 					insertionSort( arr, newDataPos);
 
 					// print
-					System.out.println("before 'Sort' :");
-					for(int i = 0; i < arr.length; i++) {
+					System.out.println("after 'Sort' :");
+					for(int i = 0; i < newDataPos; i++) {
 						System.out.print(arr[i] + ", ");
 					}
 				}
@@ -128,25 +129,25 @@ public class prac5008 {
 	public static void insertionSort(int a[], int n) {
 		int index = n - 1;
 
-		 
+		// base
+		if(n == 1) {
+			return;
+		} 
+		
+		// 
 		if(n > 1) {
 			insertionSort( a, n - 1);
 		}
 		
 		for(int i = 0; i < n; i++) {
 			if(a[index] < a[i]) {
-				int min = a[index];
-				for(int j = i; j < index; j++ ) {
-				a[j+1] = a[j];	
+				int temp = a[index];
+				for(int j = index; j > i; j-- ) {
+				a[j] = a[j - 1];	
 				}
-				a[i] = min;
+				a[i] = temp;
 			}
 		}
-		
-		if(n == 1) {
-			return;
-		}
-		
 		return ;
 	}
 }

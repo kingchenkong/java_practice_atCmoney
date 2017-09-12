@@ -96,8 +96,10 @@
 //請確保矩陣運算的時間複雜度與空間複雜度符合投影片中之描述。撰寫時，建議嘗試先將基本的類別方法與基本的檔案輸入輸出完成後，爾後逐步完成詳盡功能。
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -142,7 +144,8 @@ public class Menu {
 		try {
 			String[] arrStrLine = new String[100];
 			int lineCount = 0;
-			FileReader fr = new FileReader("src//Matrix.txt");
+			String fileNameRead = "src//Matrix.txt";
+			FileReader fr = new FileReader(fileNameRead);
 			BufferedReader bufR = new BufferedReader(fr);
 
 			int matrixCount = 0; // count of matrix
@@ -175,12 +178,12 @@ public class Menu {
 				fr.close();
 				return;
 			}
-			
+
 			// get matrix to int
 			int nextLineIndex = 0;
 			int r = 0, c = 0;
 			int[][][] matrix = new int[matrixCount][][];
-			
+
 			for(int m = 0; m < matrixCount; m++) {
 				String[] rc = arrStrLine[nextLineIndex].split(" ");
 				// matrix row & column
@@ -192,10 +195,10 @@ public class Menu {
 				}
 				// next line index to matrix
 				nextLineIndex += 1;
-//				System.out.println(" --matrix " + (m + 1));
+				//				System.out.println(" --matrix " + (m + 1));
 				matrix[m] = new int[r][c];
 				for(int i = nextLineIndex; i < nextLineIndex + r; i++) {
-					String[] split = arrStrLine[i].split(" ");
+					String[] split = arrStrLine[i].split("\\s");
 					for(int j = 0; j < split.length; j++) {
 						//					System.out.println("j = " + j + " - " + split[j]);
 						try {
@@ -203,15 +206,15 @@ public class Menu {
 						} catch(NumberFormatException e) {
 							System.out.println(e);
 						}
-//						System.out.println(" - " + matrix[m][i - nextLineIndex][j]);
+						//						System.out.println(" - " + matrix[m][i - nextLineIndex][j]);
 					}
-//					System.out.print("row:" + (i - nextLineIndex));
-//					System.out.println("-----------");
+					//					System.out.print("row:" + (i - nextLineIndex));
+					//					System.out.println("-----------");
 				}
 				// next line index offset
 				nextLineIndex += (r + 1);
 			}
-			
+
 			// print matrix
 			System.out.println(" --print matrix");
 			for(int i = 0; i < matrix.length; i++) {
@@ -229,7 +232,7 @@ public class Menu {
 					System.out.println();
 				}
 			}
-			
+
 			// Note:
 			// part -test
 			// 1. try to transpose the 'matrix[][][]'.
@@ -237,14 +240,49 @@ public class Menu {
 			// 3. finish class SparseMatrix.
 			// 4. use class SparseMatrix to finish add, mul, clone, save.
 			// 5. done.
+			// ----------------------------------------
 			
 			
 			
-			
-
-			// close
+			// close read
 			bufR.close();
 			fr.close();
+
+			// save
+			//			請輸入檔名(輸入o寫回原檔案): a.txt
+			//			已將所有矩陣成功寫入 a.txt 中
+			System.out.println("請輸入檔名(輸入o寫回原檔案): ");
+			String scanStr = sc.nextLine();
+			String fileNameWriteTo = "src//";
+			if(scanStr.equals("o"))
+				fileNameWriteTo += "Matrix.txt";
+			else
+				fileNameWriteTo += scanStr;
+			FileWriter fw = new FileWriter(fileNameWriteTo);
+			BufferedWriter bufW = new BufferedWriter(fw);
+			bufW.write(String.format("%d", matrixCount));
+			bufW.newLine();
+			for(int i = 0; i < matrixCount; i++) {
+				int l1 = matrix[i].length;
+				int l2 = matrix[i][0].length;
+				bufW.write(String.format("%d %d", matrix[i].length, matrix[i][0].length));
+				bufW.newLine();
+				for(int j = 0; j < matrix[i].length; j++) {	// 0 ~ row
+					for(int k = 0; k < matrix[i][0].length; k++) {	// 0 ~ column
+						bufW.write(matrix[i][j][k] + " ");
+					}
+					bufW.newLine();
+				}
+				bufW.newLine();
+			}
+//			bufW.write("-----------------");
+			
+			
+			//close writer
+			bufW.flush();
+			bufW.close();
+			fw.close();
+			
 		} catch (FileNotFoundException e) {
 			System.out.println("Error: File Not Found.");
 		} catch (IOException e) {

@@ -7,15 +7,15 @@ public class Practice1109 {
 
 	public static void main(String[] args) throws IOException, FileNotFoundException {
 		byte[] data = new byte[54];
-		int filesize, value1, value2, value3, value4, low, high;
+		int fileSize, value1, value2, value3, value4, low, high;
 		FileInputStream fi = new FileInputStream("a001.bmp");  
-		int fileSize = fi.available();
-		int num;
-		num = fi.read(data,0,54);	//讀取前54個位元組
+		fileSize = fi.available();
+//		int num;
+		int num = fi.read(data,0,54);	//讀取前54個位元組
 
 		int title[] = new int[6];  
 		for(int i=2;i<5;i++) {
-			if(data[i]<0)	// 若資料 > 127(3FH) ，則
+			if(data[i]<0)	// 若資料 > 127(7FH) ，則
 				title[i] = (int) data[i] + 256;	//會被判定為負值，所以需
 			else	  //要修正為正值
 				title[i] = (int) data[i];
@@ -37,9 +37,9 @@ public class Practice1109 {
 		high = (title[5] - low) / 16;  
 		value4 = high * 16 * 16 * 16 * 16 * 16 * 16 * 16 + low * 16 * 16 * 16 * 16 * 16 * 16;
 
-		filesize = value1 + value2 + value3 + value4;
+		fileSize = value1 + value2 + value3 + value4;
 
-		System.out.println("檔案大小為" + filesize + "個位元組");
+		System.out.println("檔案大小為" + fileSize + "個位元組");
 		fi.close();	//關檔
 
 

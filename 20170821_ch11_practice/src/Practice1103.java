@@ -11,13 +11,12 @@ public class Practice1103 {
 		fw.write(str1);
 		fw.write('\r');	
 		fw.write('\n');
-		for(int i=1;i<10;i++) {
+		for(int i = 1; i < 10; i++) {
 			numF = Fib(i);  
 			fw.write(numF + " ");
 		}
 		fw.write(endCh);  
 		fw.close();	//關檔
-
 	}
 
 	public static int Fib(int n) {

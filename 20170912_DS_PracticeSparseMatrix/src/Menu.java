@@ -236,21 +236,17 @@ public class Menu {
 			// Note:
 			// part -test
 			// 1. try to transpose the 'matrix[][][]'.
-			// 2. try to add, mul, clone, save.
+			// 2. try to add, mul, clone.
 			// 3. finish class SparseMatrix.
 			// 4. use class SparseMatrix to finish add, mul, clone, save.
 			// 5. done.
 			// ----------------------------------------
-			
-			
 			
 			// close read
 			bufR.close();
 			fr.close();
 
 			// save
-			//			請輸入檔名(輸入o寫回原檔案): a.txt
-			//			已將所有矩陣成功寫入 a.txt 中
 			System.out.println("請輸入檔名(輸入o寫回原檔案): ");
 			String scanStr = sc.nextLine();
 			String fileNameWriteTo = "src//";
@@ -263,8 +259,6 @@ public class Menu {
 			bufW.write(String.format("%d", matrixCount));
 			bufW.newLine();
 			for(int i = 0; i < matrixCount; i++) {
-				int l1 = matrix[i].length;
-				int l2 = matrix[i][0].length;
 				bufW.write(String.format("%d %d", matrix[i].length, matrix[i][0].length));
 				bufW.newLine();
 				for(int j = 0; j < matrix[i].length; j++) {	// 0 ~ row
@@ -275,8 +269,6 @@ public class Menu {
 				}
 				bufW.newLine();
 			}
-//			bufW.write("-----------------");
-			
 			
 			//close writer
 			bufW.flush();

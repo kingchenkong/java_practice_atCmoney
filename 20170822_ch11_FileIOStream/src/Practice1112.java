@@ -5,11 +5,11 @@ public class Practice1112 {
 		FileInputStream fi = new FileInputStream("file6.tmp");  
 		ObjectInputStream ois = new ObjectInputStream(fi);  
 		CMyStudent obj1;
-		obj1 = (CMyStudent)ois.readObject();  
+		obj1 = (CMyStudent) ois.readObject();  
 		obj1.printSum();  
-		obj1 = (CMyStudent)ois.readObject();  
+		obj1 = (CMyStudent) ois.readObject();  
 		obj1.printSum();  
-		obj1 = (CMyStudent)ois.readObject();  
+		obj1 = (CMyStudent) ois.readObject();  
 		obj1.printSum();
 
 		ois.close();  

@@ -116,176 +116,6 @@ public class Menu {
 		// menu
 		//		menu();
 	}
-	// test
-	public static void test() {
-		System.out.println(" --Term");	//
-		Term t1 = new Term(5, 5, 3);
-		Term t2 = new Term();
-
-		System.out.println(" --getter test");
-		System.out.printf("get t1 => r:%2d, c:%2d, v:%2d\n", t1.getTerm()[0], t1.getTerm()[1], t1.getTerm()[2]);
-		System.out.printf("get t2 => r:%2d, c:%2d, v:%2d\n", t2.getTerm()[0], t2.getTerm()[1], t2.getTerm()[2]);
-
-		System.out.println(" --setter test");	//
-		t2.setTerm(1, 2, 3);
-		System.out.printf("get t2 => r:%2d, c:%2d, v:%2d\n", t2.getTerm()[0], t2.getTerm()[1], t2.getTerm()[2]);
-		t2.setTerm(2, 2, 3);
-		System.out.printf("get t2 => r:%2d, c:%2d, v:%2d\n", t2.getTerm()[0], t2.getTerm()[1], t2.getTerm()[2]);
-
-		System.out.println(" --output test");	//
-		System.out.println(Term.outputTerms(t1));
-		System.out.println(Term.outputTerms(t2));
-
-		System.out.println(" --SparseMatrix");	//
-		SparseMatrix sm = new SparseMatrix(0, 0);
-		//		if(isNumber("20\n"))
-		//			System.out.println("is Num.");
-
-		try {
-			String[] arrStrLine = new String[100];
-			int lineCount = 0;
-			String fileNameRead = "src//Matrix.txt";
-			FileReader fr = new FileReader(fileNameRead);
-			BufferedReader bufR = new BufferedReader(fr);
-
-			int matrixCount = 0; // count of matrix
-			String strRead = ""; 
-
-			// read first line
-			String strMatrixCount = bufR.readLine();	
-			while((strRead = bufR.readLine()) != null) {
-				if(lineCount == arrStrLine.length)
-					arrStrLine = resizeArrStr(arrStrLine);
-				arrStrLine[lineCount++] = strRead;
-			}
-			// print Matrix.txt
-			System.out.println("--file: Matrix.txt");
-			System.out.println("--first line: " + strMatrixCount);
-			for(int i = 0; i < lineCount; i++) {
-				System.out.printf("%3d  - %s\n", i, arrStrLine[i]);
-			}
-
-			try {
-				matrixCount = Integer.parseInt(strMatrixCount);
-			} catch(NumberFormatException e) {
-				System.out.println(e);
-			}
-			// no line count
-			if(lineCount == 0) {
-				System.out.println("is Empty.");
-				// close
-				bufR.close();
-				fr.close();
-				return;
-			}
-
-			// get matrix to int
-			int nextLineIndex = 0;
-			int r = 0, c = 0;
-			int[][][] matrix = new int[matrixCount][][];
-
-			for(int m = 0; m < matrixCount; m++) {
-				String[] rc = arrStrLine[nextLineIndex].split(" ");
-				// matrix row & column
-				try {
-					r = Integer.parseInt(rc[0]);
-					c = Integer.parseInt(rc[1]);
-				} catch(NumberFormatException e) {
-					System.out.println(e);
-				}
-				// next line index to matrix
-				nextLineIndex += 1;
-				//				System.out.println(" --matrix " + (m + 1));
-				matrix[m] = new int[r][c];
-				for(int i = nextLineIndex; i < nextLineIndex + r; i++) {
-					String[] split = arrStrLine[i].split("\\s");
-					for(int j = 0; j < split.length; j++) {
-						//					System.out.println("j = " + j + " - " + split[j]);
-						try {
-							matrix[m][i - nextLineIndex][j] = Integer.parseInt(split[j]);
-						} catch(NumberFormatException e) {
-							System.out.println(e);
-						}
-						//						System.out.println(" - " + matrix[m][i - nextLineIndex][j]);
-					}
-					//					System.out.print("row:" + (i - nextLineIndex));
-					//					System.out.println("-----------");
-				}
-				// next line index offset
-				nextLineIndex += (r + 1);
-			}
-
-			// print matrix
-			System.out.println(" --print matrix");
-			for(int i = 0; i < matrix.length; i++) {
-				System.out.println("--matrix " + i);
-				System.out.printf(" -- col :%7s", " ");
-				for(int j = 0; j < matrix[i].length; j++) {
-					System.out.printf("%3d ", j);
-				}
-				System.out.println();
-				for(int j = 0; j < matrix[i].length; j++) {
-					System.out.printf(" -- row : %2d => ", j);
-					for(int k = 0; k < matrix[i][j].length; k++) {
-						System.out.printf("%3d ",matrix[i][j][k]);
-					}	
-					System.out.println();
-				}
-			}
-
-			// Note:
-			// part -test
-			// 1. try to transpose the 'matrix[][][]'.
-			// 2. try to add, mul, clone.
-			// 3. finish class SparseMatrix.
-			// 4. use class SparseMatrix to finish add, mul, clone, save.
-			// 5. done.
-			// ----------------------------------------
-			
-			// close read
-			bufR.close();
-			fr.close();
-
-			// save
-			System.out.println("請輸入檔名(輸入o寫回原檔案): ");
-			String scanStr = sc.nextLine();
-			String fileNameWriteTo = "src//";
-			if(scanStr.equals("o"))
-				fileNameWriteTo += "Matrix.txt";
-			else
-				fileNameWriteTo += scanStr;
-			FileWriter fw = new FileWriter(fileNameWriteTo);
-			BufferedWriter bufW = new BufferedWriter(fw);
-			bufW.write(String.format("%d", matrixCount));
-			bufW.newLine();
-			for(int i = 0; i < matrixCount; i++) {
-				bufW.write(String.format("%d %d", matrix[i].length, matrix[i][0].length));
-				bufW.newLine();
-				for(int j = 0; j < matrix[i].length; j++) {	// 0 ~ row
-					for(int k = 0; k < matrix[i][0].length; k++) {	// 0 ~ column
-						bufW.write(matrix[i][j][k] + " ");
-					}
-					bufW.newLine();
-				}
-				bufW.newLine();
-			}
-			
-			//close writer
-			bufW.flush();
-			bufW.close();
-			fw.close();
-			
-		} catch (FileNotFoundException e) {
-			System.out.println("Error: File Not Found.");
-		} catch (IOException e) {
-			System.out.println("Error: IOException.");
-		}
-
-
-		System.out.println(" --");
-		System.out.println(" --");
-		System.out.println(" --");
-	}
 	// menu
 	public static void menu() {
 		// input file name
@@ -400,5 +230,260 @@ public class Menu {
 	public static void optionSave() {
 		System.out.println("is save.");
 	}
+	// test
+	public static void test() {
+		System.out.println(" --Term");	//
+		Term t1 = new Term(5, 5, 3);
+		Term t2 = new Term();
 
+		System.out.println(" --getter test");
+		System.out.printf("get t1 => r:%2d, c:%2d, v:%2d\n", t1.getTerm()[0], t1.getTerm()[1], t1.getTerm()[2]);
+		System.out.printf("get t2 => r:%2d, c:%2d, v:%2d\n", t2.getTerm()[0], t2.getTerm()[1], t2.getTerm()[2]);
+
+		System.out.println(" --setter test");	//
+		t2.setTerm(1, 2, 3);
+		System.out.printf("get t2 => r:%2d, c:%2d, v:%2d\n", t2.getTerm()[0], t2.getTerm()[1], t2.getTerm()[2]);
+		t2.setTerm(2, 2, 3);
+		System.out.printf("get t2 => r:%2d, c:%2d, v:%2d\n", t2.getTerm()[0], t2.getTerm()[1], t2.getTerm()[2]);
+
+		System.out.println(" --output test");	//
+		System.out.println(Term.outputTerms(t1));
+		System.out.println(Term.outputTerms(t2));
+
+		System.out.println(" --SparseMatrix");	//
+		SparseMatrix sm = new SparseMatrix(0, 0);
+		//		if(isNumber("20\n"))
+		//			System.out.println("is Num.");
+
+		try {
+			String[] arrStrLine = new String[100];
+			int lineCount = 0;
+			String fileNameRead = "src//Matrix.txt";
+			FileReader fr = new FileReader(fileNameRead);
+			BufferedReader bufR = new BufferedReader(fr);
+
+			int matrixCount = 0; // count of matrix
+			String strRead = ""; 
+
+			// read first line
+			String strMatrixCount = bufR.readLine();	
+			while((strRead = bufR.readLine()) != null) {
+				if(lineCount == arrStrLine.length)
+					arrStrLine = resizeArrStr(arrStrLine);
+				arrStrLine[lineCount++] = strRead;
+			}
+			// print Matrix.txt
+			System.out.println("--file: Matrix.txt");
+			System.out.println("--first line: " + strMatrixCount);
+			for(int i = 0; i < lineCount; i++) {
+				System.out.printf("%3d  - %s\n", i, arrStrLine[i]);
+			}
+
+			try {
+				matrixCount = Integer.parseInt(strMatrixCount);
+			} catch(NumberFormatException e) {
+				System.out.println(e);
+			}
+			// no line count
+			if(lineCount == 0) {
+				System.out.println("is Empty.");
+				// close
+				bufR.close();
+				fr.close();
+				return;
+			}
+
+			// get matrix to int
+			int nextLineIndex = 0;
+			int r = 0, c = 0;
+			int[][][] matrix = new int[matrixCount][][];
+
+			//			// -- new arrTerm
+			//			Term[] arrT = new Term[matrixCount];
+			// -- new arrSparseMatrix
+			SparseMatrix[] arrSM = new SparseMatrix[matrixCount];
+
+			for(int m = 0; m < matrixCount; m++) {
+				String[] rc = arrStrLine[nextLineIndex].split(" ");
+				// matrix row & column
+				try {
+					r = Integer.parseInt(rc[0]);
+					c = Integer.parseInt(rc[1]);
+				} catch(NumberFormatException e) {
+					System.out.println(e);
+				}
+				// next line index to matrix
+				nextLineIndex += 1;
+				//				System.out.println(" --matrix " + (m + 1));
+				matrix[m] = new int[r][c];
+
+				// -- new Term
+				arrSM[m] = new SparseMatrix(r, c);
+
+				for(int i = nextLineIndex; i < nextLineIndex + r; i++) {
+					String[] split = arrStrLine[i].split("\\s");
+					for(int j = 0; j < split.length; j++) {
+						//					System.out.println("j = " + j + " - " + split[j]);
+						try {
+							matrix[m][i - nextLineIndex][j] = Integer.parseInt(split[j]);
+						} catch(NumberFormatException e) {
+							System.out.println(e);
+						}
+						// -- 
+						try {
+							int newParse = Integer.parseInt(split[j]);
+							if(newParse != 0) {
+								Term[] arrT = arrSM[m].getTerms();
+								arrT[0].valueadd1(); // value + 1
+								int nowSetTerm = arrT[0].getTerm()[2]; // get Value
+								if(nowSetTerm == arrT.length) {
+									arrSM[m].resize();
+									arrT = arrSM[m].getTerms();
+								}
+								arrT[nowSetTerm] = new Term(i - nextLineIndex, j, newParse);
+							}							
+						} catch(NumberFormatException e) {
+							System.out.println(e);
+						}
+						//---------
+						//						System.out.println(" - " + matrix[m][i - nextLineIndex][j]);
+					}
+					//					System.out.print("row:" + (i - nextLineIndex));
+					//					System.out.println("-----------");
+				}
+				// next line index offset
+				nextLineIndex += (r + 1);
+			}
+			// print matrix
+			System.out.println(" --print matrix");
+			for(int i = 0; i < matrix.length; i++) {
+				System.out.println("--matrix " + i);
+				System.out.printf(" -- col :%7s", " ");
+				for(int j = 0; j < matrix[i].length; j++) {
+					System.out.printf("%3d ", j);
+				}
+				System.out.println();
+				for(int j = 0; j < matrix[i].length; j++) {
+					System.out.printf(" -- row : %2d => ", j);
+					for(int k = 0; k < matrix[i][j].length; k++) {
+						System.out.printf("%3d ",matrix[i][j][k]);
+					}	
+					System.out.println();
+				}
+			}
+			// print arrSM
+			System.out.println(" --print arrSM");
+			for(int m = 0; m < matrixCount; m++) {
+				System.out.println("--matrix " + m);
+				SparseMatrix.printTerms(arrSM[m].getTerms());
+				//							Term[] arrT = arrSM[m].getTerms();
+				//							System.out.println("matrix " + m);
+				//							System.out.println("row\t col\t value");
+				//							for(int i = 1; i < arrT[0].getTerm()[2]; i++) {
+				//								int[] t = arrT[i].getTerm();
+				//								System.out.printf("%d\t %d\t %d\n", t[0], t[1], t[2]);
+				//							}
+			}
+
+			// Note:
+			// part -test
+			// 1. try to transpose the 'matrix[][][]'.
+			// 2. try to add, mul, clone.
+			// 3. finish class SparseMatrix.
+			// 4. use class SparseMatrix to finish add, mul, clone, save.
+			// 5. done.
+			// ----------------------------------------
+
+			// close read
+			bufR.close();
+			fr.close();
+
+			// save
+			System.out.println("請輸入檔名(輸入o寫回原檔案): ");
+			String scanStr = sc.nextLine();
+			String fileNameWriteTo = "src//";
+			if(scanStr.equals("o"))
+				fileNameWriteTo += "Matrix.txt";
+			else if(scanStr.equals("a"))		// <- for test
+				fileNameWriteTo += "a.txt";
+			else
+				fileNameWriteTo += scanStr;
+			FileWriter fw = new FileWriter(fileNameWriteTo);
+			BufferedWriter bufW = new BufferedWriter(fw);
+
+			// test
+			System.out.println(matrixCount);
+
+			bufW.write(String.format("%d", matrixCount));
+			bufW.newLine();
+
+			// - matrix[][][]
+			//			for(int i = 0; i < matrixCount; i++) {
+			//				bufW.write(String.format("%d %d", matrix[i].length, matrix[i][0].length));
+			//				bufW.newLine();
+			//				for(int j = 0; j < matrix[i].length; j++) {	// 0 ~ row
+			//					for(int k = 0; k < matrix[i][0].length; k++) {	// 0 ~ column
+			//						bufW.write(matrix[i][j][k] + " ");
+			//					}
+			//					bufW.newLine();
+			//				}
+			//				bufW.newLine();
+			//			}
+
+			// - arrSM
+			System.out.println("-- test save arrSM");
+			for(int i = 0; i < matrixCount; i++) {
+				Term[] arrT = arrSM[i].getTerms();
+				int[] t0 = arrT[0].getTerm();
+
+				//test
+				System.out.println(t0[0] + " " + t0[1]);
+				bufW.write(String.format("%d %d", t0[0], t0[1]));
+				bufW.newLine();
+
+				// next term
+				int nextTermIndex = 1;
+				int nextTermRow = arrT[nextTermIndex].getTerm()[0];
+				int nextTermColumn = arrT[nextTermIndex].getTerm()[1];
+				int nextTermValue = arrT[nextTermIndex].getTerm()[2];
+
+				for(int nowRow = 0; nowRow < t0[0]; nowRow++) {
+					for(int nowColumn = 0; nowColumn < t0[1]; nowColumn++) {
+						if(nowRow == nextTermRow && nowColumn == nextTermColumn) {
+							// now position's value != 0
+							System.out.print(nextTermValue + " ");
+							bufW.write(String.format("%d ", nextTermValue));
+							// modify - nextTerm
+							if(nextTermIndex < t0[2]) {
+								nextTermIndex++;
+								nextTermRow = arrT[nextTermIndex].getTerm()[0];
+								nextTermColumn = arrT[nextTermIndex].getTerm()[1];
+								nextTermValue = arrT[nextTermIndex].getTerm()[2];
+							}
+						} else {
+							// now position's value = 0
+							System.out.print("0 ");
+							bufW.write("0 ");
+						}
+					}
+					System.out.println();
+					bufW.newLine();
+				}
+				// one matrix already done.
+				bufW.newLine();
+				System.out.println();
+			}
+			//close writer
+			bufW.flush();
+			bufW.close();
+			fw.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Error: File Not Found.");
+		} catch (IOException e) {
+			System.out.println("Error: IOException.");
+		}
+		System.out.println(" --");
+		System.out.println(" --");
+		System.out.println(" --");
+	}
 }

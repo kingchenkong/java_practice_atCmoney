@@ -14,14 +14,19 @@ public class Term {
 	}
 	// Setter
 	public void setTerm(int r, int c, int v) {
-		if(v > r*c) {
-			System.out.println("Error: value > Row * Colume.");
-			this.setTerm(0, 0, 0);
-		} else {
+//		if(v > r*c) {
+//			System.out.println("Error: value > Row * Colume.");
+//			this.setTerm(0, 0, 0);
+//		} else {
 		this.row = r;
 		this.col = c;
 		this.value = v;
-		}
+//		}
+	}
+	public void valueadd1() {
+//		if(this.value < this.row * this.col) {
+			this.value++;
+//		}
 	}
 	// Getter
 	public int[] getTerm() {

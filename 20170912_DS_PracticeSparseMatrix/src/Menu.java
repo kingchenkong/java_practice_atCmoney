@@ -101,25 +101,27 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu {
 	// Scanner
 	public static Scanner sc = new Scanner(System.in);
 	// static
-	public static SparseMatrix[] arrMatrix = new SparseMatrix[10];
+	public static String originalFile;
+	public static SparseMatrix[] arrMatrix;
+	public static int matrixCount;
 
 	public static void main(String[] args) {
 		// test
-		test();
-
+		//		test();
 		// menu
-		//		menu();
+		mainRun();
 	}
 	// menu
-	public static void menu() {
-		// input file name
-		inputFileName();
+	public static void mainRun() {
+		// file load in and print
+		fileLoadInAndPrint();
 		// main option
 		do {
 			System.out.print("1) Clone, 2) Transpose, 3) Add, 4) Mult, 5) Save, 6) Exit : ");
@@ -148,13 +150,11 @@ public class Menu {
 					break;
 				default:
 					System.out.println("Error: 'intOption' issue.");
-
 				}
 			} else {
 				System.out.println("Error: input error.");
 			}
 		} while(true);
-
 	}
 	// function
 	public static String[] resizeArrStr(String[] arr) {
@@ -163,40 +163,123 @@ public class Menu {
 			copy[i] = arr[i];
 		return copy;
 	}
-	public static void inputFileName() {
+	//  - file load in and print
+	public static void fileLoadInAndPrint() {
+		// input file name
+		FileReader fr = null;
+		String fileName;
 		do {
 			System.out.print("請輸入檔案名稱: ");
-			String fileName = sc.next();
+			fileName = sc.next();
 			System.out.println();
-
-			FileReader fr = null;
 			try {
 				fr = new FileReader("src//" + fileName);
+				originalFile = "src//" + fileName;
+				BufferedReader bfr = new BufferedReader(fr);
+
+				int smCount = 0; // count of matrix
+				String strRead = ""; 
+				String[] arrStrLine = new String[100];
+				int lineCount = 0;
+
+				// read first line
+				String strMatrixCount = bfr.readLine();	
+				while((strRead = bfr.readLine()) != null) {
+					if(lineCount == arrStrLine.length)
+						arrStrLine = resizeArrStr(arrStrLine);
+					arrStrLine[lineCount++] = strRead;
+				}
+				// no line count
+				if(lineCount == 0) {
+					System.out.println("is Empty.");
+					// close
+					bfr.close();
+					fr.close();
+					return;
+				}
+				// print fileName
+				System.out.println("--file: " + fileName);
+				System.out.println("--first line: " + strMatrixCount);
+				for(int i = 0; i < lineCount; i++) {
+					System.out.printf("%3d  - %s\n", i, arrStrLine[i]);
+				}
+
+				try {
+					smCount = Integer.parseInt(strMatrixCount);
+				} catch(NumberFormatException e) {
+					System.out.println(e);
+				}
+				// load in Array
+				// get matrix to int
+				int nextLineIndex = 0;
+				int r = 0, c = 0;
+				// -- new arrSparseMatrix
+				SparseMatrix[] arrSM = new SparseMatrix[smCount];
+
+				for(int m = 0; m < smCount; m++) {
+					String[] rc= arrStrLine[nextLineIndex].split(" ");
+					// matrix row & column
+					try {
+						r = Integer.parseInt(rc[0]);
+						c = Integer.parseInt(rc[1]);
+					} catch(NumberFormatException e) {
+						System.out.println(e);
+					}
+					// next line index to matrix
+					nextLineIndex += 1;
+
+					// -- new Term
+					arrSM[m] = new SparseMatrix(r, c);
+
+					for(int i = nextLineIndex; i < nextLineIndex + r; i++) {
+						String[] split = arrStrLine[i].split("\\s");
+						for(int j = 0; j < split.length; j++) {
+							// -- 
+							try {
+								int newParse = Integer.parseInt(split[j]);
+								if(newParse != 0) {
+									Term[] arrT = arrSM[m].getTerms();
+									arrT[0].valueadd1(); // value + 1
+									int nowSetTerm = arrT[0].getTerm()[2]; // get Value
+									if(nowSetTerm == arrT.length) {
+										arrSM[m].resize();
+										arrT = arrSM[m].getTerms();
+									}
+									arrT[nowSetTerm] = new Term(i - nextLineIndex, j, newParse);
+								}							
+							} catch(NumberFormatException e) {
+								System.out.println(e);
+							}
+						}
+					}
+					// next line index offset
+					nextLineIndex += (r + 1);
+				}
+				// print file content
+				//  - print arrSM
+				System.out.println(" --print arrSM");
+				for(int m = 0; m < smCount; m++) {
+					System.out.println("--matrix " + m);
+					SparseMatrix.printTerms(arrSM[m].getTerms());
+				}
+				// store to static arrSM
+				arrMatrix = arrSM;
+				matrixCount = smCount;
+				// close
+				bfr.close();
+				fr.close();
 			} catch (FileNotFoundException e) {
 				System.out.println("Error: file not found.");
+				sc.nextLine();
+				continue;
+			} catch (IOException e) {
+				System.out.println("Error: 'fr' close issue.");
+				sc.nextLine();
 				continue;
 			}
 			sc.nextLine();
-			try {
-				fr.close();
-			} catch (IOException e) {
-				System.out.println("Error: 'fr' close issue.");
-			}
-			return ;
-
-			//			BufferedReader bufR = new BufferedReader(fr);
-			//			String readStr;
-			//			try {
-			//				String strMatrixCount = bufR.readLine();
-			//				String strMatrixRC = bufR.readLine();
-			//				
-			//
-			//			} catch (IOException e) {
-			//				System.out.println("Error: bufR loading issue.");				
-			//			}
-
+			break;
 		} while(true);
-
 	}
 	// check 1~6
 	public static boolean checkOption(String str) {
@@ -214,21 +297,179 @@ public class Menu {
 				return false;
 		return true;
 	}
+	public static void checkIfResizeArrMatrix() {
+		// - resize - arrMatrix 
+		if(matrixCount == arrMatrix.length) {
+			SparseMatrix[] copy = new SparseMatrix[arrMatrix.length * 2];
+			for(int i = 0; i < matrixCount; i++)
+				copy[i] = arrMatrix[i];
+			arrMatrix = copy;
+		}
+	}
+
+	// input and check index is correct
+	public static int inputAndCheckIndexIsCorrect() {
+		// input and check index is correct
+		int index = -1;
+		do {
+			System.out.println("input (index): ");
+			try {
+				int scanInt = sc.nextInt();
+				if(scanInt < 0 || scanInt >= matrixCount) {
+					System.out.println("Error: index out range.");
+					continue;
+				}
+				if(scanInt < matrixCount) {
+					index = scanInt;
+					sc.nextLine();
+					return index;
+				}
+			} catch(InputMismatchException e) {
+				System.out.println(e);
+				sc.nextLine();
+				continue;
+			}
+		} while(true);
+	}
 	// option
 	public static void optionClone() {
-		System.out.println("is clone.");
+		// input and check index is correct
+		int indexClone = inputAndCheckIndexIsCorrect();
+		// clone
+		// - resize - arrMatrix 
+		checkIfResizeArrMatrix();
+		arrMatrix[matrixCount++] = copySM(indexClone);
+		// print
+		SparseMatrix.printTerms(arrMatrix[indexClone].getTerms());
+		System.out.println("矩陣已存入陣列尾端 位置為 " + (matrixCount-1));
+	}
+	public static SparseMatrix copySM(int index) {
+		Term[] ts = arrMatrix[index].getTerms();
+		SparseMatrix sm = new SparseMatrix(ts[0].getTerm()[0], ts[0].getTerm()[1]);
+		int tsCount = ts[0].getTerm()[2];
+		Term[] newTs = new Term[tsCount + 1];
+		for(int i = 0; i < tsCount + 1; i++) {
+			newTs[i] = new Term(ts[i].getTerm()[0], ts[i].getTerm()[1], ts[i].getTerm()[2]); 
+		}
+		sm.setTerms(newTs);
+		return sm;
 	}
 	public static void optionTranspose() {
-		System.out.println("is transpose.");
+		// input and check index is correct
+		int indexTranspose = inputAndCheckIndexIsCorrect();
+		// - resize - arrMatrix 
+		checkIfResizeArrMatrix();
+		arrMatrix[matrixCount++] = copySM(indexTranspose);
+//		arrMatrix[matrixCount - 1].Transpose();
+		arrMatrix[matrixCount - 1].FastTranspose();
+		//		arrMatrix[indexTranspose].Transpose();
+		SparseMatrix.printTerms(arrMatrix[matrixCount - 1].getTerms());
+		System.out.println("矩陣已存入陣列尾端 位置為 " + (matrixCount-1));
 	}
 	public static void optionAdd() {
-		System.out.println("is add.");
+		// input and check index is correct
+		int indexSummand = inputAndCheckIndexIsCorrect();
+		int indexAddend = inputAndCheckIndexIsCorrect();
+		// - resize - arrMatrix 
+		checkIfResizeArrMatrix();
+		SparseMatrix sm = SparseMatrix.Add(arrMatrix[indexSummand], arrMatrix[indexAddend]);
+		if(sm == null) {
+			System.out.println("Error: two matrix Row & Column mismatch. -- Add");
+			return;
+		}
+		arrMatrix[matrixCount++] = sm;
+		// print
+		SparseMatrix.printTerms(arrMatrix[matrixCount - 1].getTerms());
+		System.out.println("矩陣已存入陣列尾端 位置為 " + (matrixCount-1));
 	}
 	public static void optionMultiply() {
-		System.out.println("is multiply.");
+		// input and check index is correct
+		int indexMultiplicand = inputAndCheckIndexIsCorrect();
+		int indexMultiplier = inputAndCheckIndexIsCorrect();
+		// - resize - arrMatrix 
+		checkIfResizeArrMatrix();
+		SparseMatrix sm = SparseMatrix.Mul(arrMatrix[indexMultiplicand], arrMatrix[indexMultiplier]);
+		if(sm == null) {
+			System.out.println("Error: two matrix Row & Column mismatch. -- Multiply");
+			return;
+		}
+		arrMatrix[matrixCount++] = sm;
+		// print
+		SparseMatrix.printTerms(arrMatrix[matrixCount - 1].getTerms());
+		System.out.println("矩陣已存入陣列尾端 位置為 " + (matrixCount-1));
 	}
 	public static void optionSave() {
-		System.out.println("is save.");
+		//		System.out.println("is save.");
+		// save
+		try {
+			System.out.println("請輸入檔名(輸入o寫回原檔案): ");
+			String scanStr = sc.nextLine();
+			String fileNameWriteTo = "src//";
+			if(scanStr.equals("o"))
+				fileNameWriteTo = originalFile;
+			else if(scanStr.equals("a"))		// <- for test
+				fileNameWriteTo += "a.txt";
+			else
+				fileNameWriteTo += scanStr;
+			FileWriter fw = new FileWriter(fileNameWriteTo);
+			BufferedWriter bufW = new BufferedWriter(fw);
+			// write in matrixCount
+			bufW.write(String.format("%d", matrixCount));
+			bufW.newLine();
+			// - arrMatrix
+			for(int i = 0; i < matrixCount; i++) {
+				Term[] arrT = arrMatrix[i].getTerms();
+				int[] t0 = arrT[0].getTerm();
+
+				//				//test
+				//				System.out.println(t0[0] + " " + t0[1]);
+				bufW.write(String.format("%d %d", t0[0], t0[1]));
+				bufW.newLine();
+
+				// next term
+				int nextTermIndex = 1;
+				int nextTermRow = arrT[nextTermIndex].getTerm()[0];
+				int nextTermColumn = arrT[nextTermIndex].getTerm()[1];
+				int nextTermValue = arrT[nextTermIndex].getTerm()[2];
+
+				for(int nowRow = 0; nowRow < t0[0]; nowRow++) {
+					for(int nowColumn = 0; nowColumn < t0[1]; nowColumn++) {
+						if(nowRow == nextTermRow && nowColumn == nextTermColumn) {
+							// now position's value != 0
+							//							System.out.print(nextTermValue + " ");
+							bufW.write(String.format("%d ", nextTermValue));
+							// modify - nextTerm
+							if(nextTermIndex < t0[2]) {
+								nextTermIndex++;
+								nextTermRow = arrT[nextTermIndex].getTerm()[0];
+								nextTermColumn = arrT[nextTermIndex].getTerm()[1];
+								nextTermValue = arrT[nextTermIndex].getTerm()[2];
+							}
+						} else {
+							// now position's value = 0
+							//							System.out.print("0 ");
+							bufW.write("0 ");
+						}
+					}
+					//					System.out.println();
+					bufW.newLine();
+				}
+				// one matrix already done.
+				bufW.newLine();
+				//				System.out.println();
+			}
+			System.out.println("已將所有矩陣成功寫入 " + fileNameWriteTo + " 中");
+
+			//close writer
+			bufW.flush();
+			bufW.close();
+			fw.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Error: File Not Found.");
+		} catch (IOException e) {
+			System.out.println("Error: IOException.");
+		}
+
 	}
 	// test
 	public static void test() {

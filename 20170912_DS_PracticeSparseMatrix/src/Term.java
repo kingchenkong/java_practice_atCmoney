@@ -23,6 +23,9 @@ public class Term {
 		this.value = v;
 //		}
 	}
+	public void setValue(int v) {
+		this.value = v;
+	}
 	public void valueadd1() {
 //		if(this.value < this.row * this.col) {
 			this.value++;

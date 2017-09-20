@@ -23,11 +23,11 @@ public class GameMain {
 
 		jf.setVisible(true);
 
-		Timer timer = new Timer(50, new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				jf.repaint();
-			}
-		});
-		timer.start();
+//		Timer timer = new Timer(50, new ActionListener() {
+//			public void actionPerformed(ActionEvent evt) {
+//				jf.repaint();
+//			}
+//		});
+//		timer.start();
 	}
 }

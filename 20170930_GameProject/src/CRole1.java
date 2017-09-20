@@ -78,6 +78,7 @@ public class CRole1 {
 	// Method
 	//  - paint
 	public void paint(Graphics g) {
+		this.index = (this.index++) % 3;
 		g.drawImage(this.arrClipWalking[this.direction][this.index], this.posX, this.posY, 48, 48, null);
 	}
 	// - setter

@@ -4,24 +4,23 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-// 障礙物
+public class GameMain {
 
-public class Demo1 {
 	public static void main(String[] args) {
 		// 可移動區域編成
 		test();	
 	}
 	public static void test() {
 		final JFrame jf = new JFrame();
-		MapJPanel mjp = new MapJPanel();
-		RoleJPanel rjp = new  RoleJPanel();
+//		MapJPanel mjp = new MapJPanel();
+		GameJPanel gjp = new GameJPanel();
 
-		jf.setTitle("this is JFrame");;
+		jf.setTitle("Boomber Man");;
 		jf.setSize(800, 800);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		jf.add(mjp);
-		jf.add(rjp);
-		
+		//		jf.add(mjp);
+		jf.add(gjp);
+
 		jf.setVisible(true);
 
 		Timer timer = new Timer(50, new ActionListener() {

@@ -21,7 +21,7 @@ public class MapJPanel extends javax.swing.JPanel{
 
 		for(int i = 0; i < 15; i++) {
 			for(int j = 0; j < 15; j++) {
-				this.arrFloor[i][j] = new CMap( i * 40 + this.offsetX, j * 40 + this.offsetY);
+				this.arrFloor[i][j] = new CMap( i * 48 + this.offsetX, j * 48 + this.offsetY);
 			}
 		}
 

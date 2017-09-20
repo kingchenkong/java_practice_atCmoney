@@ -44,7 +44,7 @@ public class CMap {
 	
 	//  - paint
 	public void paint(Graphics g) {
-		g.drawImage(this.floor, this.posX, this.posY, 40, 40, null);
+		g.drawImage(this.floor, this.posX, this.posY, 48, 48, null);
 	}
 
 }

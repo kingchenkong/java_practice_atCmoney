@@ -37,35 +37,34 @@ public class CRole1 {
 		}
 		switch(sheepNo) {
 		case 0:
-			this.pointClipStart = new Point(0, 0);	// sheep 0 - 淡灰
+			this.pointClipStart = new Point(0, 0);
 			break;
 		case 1:
-			this.pointClipStart = new Point(144, 0);	// sheep 1 - 淡黃
+			this.pointClipStart = new Point(144, 0);
 			break;
 		case 2:
-			this.pointClipStart = new Point(288, 0);	// sheep 2 - 黑
+			this.pointClipStart = new Point(288, 0);
 			break;
 		case 3:
-			this.pointClipStart = new Point(432, 0);	// sheep 3 - 灰
+			this.pointClipStart = new Point(432, 0);
 			break;
 		case 4:
-			this.pointClipStart = new Point(0, 192);	// sheep 4 - 白
+			this.pointClipStart = new Point(0, 192);
 			break;
 		case 5:
-			this.pointClipStart = new Point(144,192);	// sheep 5 - 黃
+			this.pointClipStart = new Point(144,192);
 			break;
 		case 6:
-			this.pointClipStart = new Point(288, 192);	// sheep 6 - 褐
+			this.pointClipStart = new Point(288, 192);
 			break;
 		case 7:
-			this.pointClipStart = new Point(432, 192);	// sheep 7 - 淡褐
+			this.pointClipStart = new Point(432, 192);
 			break;
 		default:
-			this.pointClipStart = new Point(0, 0);	// sheep 0 - 淡灰 
+			this.pointClipStart = new Point(0, 0); 
 		}
 		this.arrClipWalking = new BufferedImage[4][3];
 		this.setArrClipWalking();
-
 		// role 
 		// - position
 		this.setPaintPositionX(x);
@@ -74,12 +73,11 @@ public class CRole1 {
 		this.setDirection(0);
 		this.setIndex(0);
 	}
-
 	// Method
 	//  - paint
 	public void paint(Graphics g) {
 		this.index = (this.index++) % 3;
-		g.drawImage(this.arrClipWalking[this.direction][this.index], this.posX, this.posY, 48, 48, null);
+		g.drawImage(this.arrClipWalking[this.direction][this.index], this.posX, this.posY, 70, 70, null);
 	}
 	// - setter
 	// 		- clip
@@ -108,17 +106,6 @@ public class CRole1 {
 		//		posY += 8;
 		this.direction = (dir) % arrClipWalking.length;
 	}
-	// int forbiddenDir, 
-	// -1 - No.
-	// 0 - down.
-	// 1 - left.
-	// 2 - right.
-	// 3 - up.
-	// int[] validDir,
-	// [0], down
-	// [1], left
-	// [2], right
-	// [3], up
 	public void move(int d) { 
 		if(this.direction == 0)	// down
 			this.setPaintPositionY(this.getPositionY() + d);

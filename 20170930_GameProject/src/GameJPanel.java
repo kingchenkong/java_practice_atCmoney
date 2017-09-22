@@ -35,8 +35,8 @@ public class GameJPanel extends JPanel{
 		this.CMap1 = new CMap();
 		// initial setting
 		this.rangePanel = new Rectangle(50, 50, 502, 502);
-		this.posRoleInit = new Point(50, 25); // 畫面初始, 出生位置
-		this.cRole1 = new CRole1((int)this.posRoleInit.getX() + 80, (int)this.posRoleInit.getY() + 80, 7);
+		this.posRoleInit = new Point(0, 0); // 畫面初始, 出生位置
+		this.cRole1 = new CRole1((int)this.posRoleInit.getX() + 0, (int)this.posRoleInit.getY() + 0, 1);
 		this.oneStepMoveDistance = 0;
 		// listener
 		this.addKeyListener(new CMyListener1());
@@ -93,19 +93,19 @@ public class GameJPanel extends JPanel{
 		@Override public void keyPressed(KeyEvent e) {
 			if(e.getKeyCode() == KeyEvent.VK_DOWN) {
 				cRole1.setDirection(0);
-				oneStepMoveDistance = 16;
+				oneStepMoveDistance = 25;
 			}
 			if(e.getKeyCode() == KeyEvent.VK_LEFT) {				
 				cRole1.setDirection(1);
-				oneStepMoveDistance = 16;
+				oneStepMoveDistance = 25;
 			}
 			if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
 				cRole1.setDirection(2);
-				oneStepMoveDistance = 16;
+				oneStepMoveDistance = 25;
 			}
 			if(e.getKeyCode() == KeyEvent.VK_UP) {
 				cRole1.setDirection(3);
-				oneStepMoveDistance = 16;
+				oneStepMoveDistance = 25;
 			}
 		}
 		@Override public void keyReleased(KeyEvent e) {

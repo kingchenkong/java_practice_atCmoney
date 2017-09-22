@@ -40,7 +40,6 @@ class Background extends JPanel{
 
 	public void loadMap() {
 		try{ 
-			
 			System.out.println("開始載入");   
 			String str = "bin//Map//map.map";
 			FileInputStream fis = new FileInputStream(str);
@@ -60,7 +59,7 @@ class Background extends JPanel{
 			dis.close();  
 			fis.close();
 			System.out.println("載入成功");
-		}catch(Exception e2){  
+		} catch(Exception e2) {  
 			e2.printStackTrace();  
 		}  
 	}

@@ -18,7 +18,7 @@ public class CRole1 {
 	private BufferedImage[][] arrClipWalking;
 	private int posX, posY;
 
-	public CRole1(int x, int y, int sheepNo) {
+	public CRole1(int x, int y, int roleImgIndex) {
 		// load in source
 		try {
 			this.sourceImage = ImageIO.read(getClass().getResource("resources//RoleWalk1.png"));
@@ -32,10 +32,10 @@ public class CRole1 {
 		this.sourceImageColumnCount = 12;
 		// set clip
 		this.sizeOneImg = new Dimension(this.sourceImage.getWidth() / this.sourceImageColumnCount, this.sourceImage.getHeight() / this.sourceImageRowCount);
-		if(sheepNo < 0 || sheepNo > 7) {
-			sheepNo = 0;
+		if(roleImgIndex < 0 || roleImgIndex > 7) {
+			roleImgIndex = 0;
 		}
-		switch(sheepNo) {
+		switch(roleImgIndex) {
 		case 0:
 			this.pointClipStart = new Point(0, 0);
 			break;

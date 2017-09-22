@@ -34,8 +34,8 @@ public class GameJPanel extends JPanel{
 		// CMap
 		this.CMap1 = new CMap();
 		// initial setting
-		this.rangePanel = new Rectangle(50, 50, 502, 502);
-		this.posRoleInit = new Point(0, 0); // 畫面初始, 出生位置
+		this.rangePanel = new Rectangle(50, 50, 475, 450);
+		this.posRoleInit = new Point(25, 25); // 畫面初始, 出生位置
 		this.cRole1 = new CRole1((int)this.posRoleInit.getX() + 0, (int)this.posRoleInit.getY() + 0, 1);
 		this.oneStepMoveDistance = 0;
 		// listener
@@ -58,9 +58,9 @@ public class GameJPanel extends JPanel{
 	}
 	public boolean isTouchEdge() {
 		if((cRole1.getPositionX() < this.rangePanel.x && cRole1.direction == 1) 
-				|| (cRole1.getPositionX() >= this.rangePanel.width && cRole1.direction == 2)
+				|| (cRole1.getPositionX() > this.rangePanel.width && cRole1.direction == 2)
 				|| (cRole1.getPositionY() < this.rangePanel.y && cRole1.direction == 3)
-				|| (cRole1.getPositionY() >= this.rangePanel.height && cRole1.direction == 0)) {
+				|| (cRole1.getPositionY() > this.rangePanel.height && cRole1.direction == 0)) {
 			return true;
 		}
 		return false;
@@ -91,6 +91,7 @@ public class GameJPanel extends JPanel{
 	}
 	class CMyListener1 extends KeyAdapter {
 		@Override public void keyPressed(KeyEvent e) {
+//			System.out.println(e.getKeyCode());
 			if(e.getKeyCode() == KeyEvent.VK_DOWN) {
 				cRole1.setDirection(0);
 				oneStepMoveDistance = 25;
@@ -107,6 +108,9 @@ public class GameJPanel extends JPanel{
 				cRole1.setDirection(3);
 				oneStepMoveDistance = 25;
 			}
+//			if(e.getKeyCode() == KeyEvent.VK_SPACE ) {
+//				System.out.printf("(%3d,%3d)\n", cRole1.getPositionX(), cRole1.getPositionY());
+//			}
 		}
 		@Override public void keyReleased(KeyEvent e) {
 

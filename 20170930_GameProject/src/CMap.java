@@ -18,13 +18,28 @@ public class CMap {
 	private ImageIcon[][] icons1; //地上物(障礙物)
 	//素材陣列
 	private ImageIcon[] allIcons;
+	private int[][] mapMatrix;
+	private int mapIndex;
 
 	public CMap() {
+		// element
 		this.eleWidth = 50;  
 		this.eleHeight = 50;  
+		// matrix
+		testMatrix tm = new testMatrix();
+		mapIndex = 0;
+		this.mapMatrix = tm.getOneMapMatrix(mapIndex);
+		int rowCount = tm.getRowCountByMapNo(mapIndex);
+		int columnCount = tm.getColumnCountByMapNo(mapIndex);
+		
+		// 人物出生點
+		
+		
 		//地圖大小
-		this.mapWidth = 600;  
-		this.mapHeight= 600;  
+//		this.mapWidth = 600;
+		this.mapWidth = this.eleWidth * columnCount;
+//		this.mapHeight = 600; 
+		this.mapHeight = this.eleHeight * rowCount;
 		this.map0 = new int[mapWidth / eleWidth][mapHeight / eleHeight]; //地板(人物腳下)
 		this.map1 = new int[mapWidth / eleWidth][mapHeight / eleHeight]; //地上物(障礙物)
 		this.icons0 = new ImageIcon[mapWidth / eleWidth][mapHeight / eleHeight]; //地板(人物腳下)  
@@ -83,7 +98,7 @@ public class CMap {
 	}
 	public void loadMap() {
 		try{ 
-			System.out.println("開始載入");   
+//			System.out.println("開始載入");   
 			String str = "bin//Map//map.map";
 			FileInputStream fis = new FileInputStream(str);
 			DataInputStream dis = new DataInputStream(fis);  
@@ -101,7 +116,7 @@ public class CMap {
 			}  
 			dis.close();  
 			fis.close();
-			System.out.println("載入成功");
+//			System.out.println("載入成功");
 		} catch(Exception e2){  
 			e2.printStackTrace();  
 		}  

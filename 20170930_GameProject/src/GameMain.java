@@ -9,8 +9,9 @@ public class GameMain {
 	public static void main(String[] args) {
 		// 可移動區域編成
 		test();	
+//		mainExecute();
 	}
-	public static void test() {
+	public static void mainExecute() {
 		final JFrame jf = new JFrame();
 //		MapJPanel mjp = new MapJPanel();
 		GameJPanel gjp = new GameJPanel();
@@ -29,5 +30,11 @@ public class GameMain {
 //			}
 //		});
 //		timer.start();
+	}
+	public static void test() {
+//		testMatrix tM = new testMatrix();
+//		tM.printMapMatrix();
+		MapMatrixSet mms = new MapMatrixSet();
+		mms.printMapMatrix();
 	}
 }

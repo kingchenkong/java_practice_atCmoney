@@ -7,34 +7,21 @@ import javax.swing.Timer;
 public class GameMain {
 
 	public static void main(String[] args) {
-		// 可移動區域編成
-		test();	
-//		mainExecute();
+		mainExecute();
 	}
 	public static void mainExecute() {
 		final JFrame jf = new JFrame();
-//		MapJPanel mjp = new MapJPanel();
+
 		GameJPanel gjp = new GameJPanel();
 
-		jf.setTitle("Boomber Man");;
-		jf.setSize(800, 800);
+		jf.setTitle("Push Box");;
+		jf.setSize(500, 522);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//		jf.add(mjp);
 		jf.add(gjp);
 
 		jf.setVisible(true);
 
-//		Timer timer = new Timer(50, new ActionListener() {
-//			public void actionPerformed(ActionEvent evt) {
-//				jf.repaint();
-//			}
-//		});
-//		timer.start();
+
 	}
-	public static void test() {
-//		testMatrix tM = new testMatrix();
-//		tM.printMapMatrix();
-		MapMatrixSet mms = new MapMatrixSet();
-		mms.printMapMatrix();
-	}
+
 }

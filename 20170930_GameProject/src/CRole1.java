@@ -19,7 +19,6 @@ public class CRole1 {
 	private int posX, posY;
 
 	public CRole1(int x, int y, int roleImgIndex) {
-		// load in source
 		try {
 			this.sourceImage = ImageIO.read(getClass().getResource("resources//RoleWalk1.png"));
 		}
@@ -65,34 +64,24 @@ public class CRole1 {
 		}
 		this.arrClipWalking = new BufferedImage[4][3];
 		this.setArrClipWalking();
-		// role 
-		// - position
-		this.setPaintPositionX(x);
-		this.setPaintPositionY(y);
+		this.posX = x;
+		this.posY = y;
+
 		// - direction, index
 		this.setDirection(0);
 		this.setIndex(0);
 	}
-	// Method
-	//  - paint
+
 	public void paint(Graphics g) {
-		this.index = (this.index++) % 3;
-		g.drawImage(this.arrClipWalking[this.direction][this.index], this.posX, this.posY, 70, 70, null);
+		g.drawImage(this.arrClipWalking[this.direction][this.index], this.posX, this.posY, 50, 50, null);
 	}
-	// - setter
-	// 		- clip
+
 	public void setArrClipWalking() {
 		for(int i = 0; i < 4; i++) {
 			for(int j = 0; j < 3; j++) {
 				this.arrClipWalking[i][j] = this.sourceImage.getSubimage(this.pointClipStart.x + j * this.sizeOneImg.width, this.pointClipStart.y + i * this.sizeOneImg.height, this.sizeOneImg.width, this.sizeOneImg.height);
 			}
 		}
-	}
-	public void setPaintPositionX(int x) {
-		this.posX = x;
-	}
-	public void setPaintPositionY(int y) {
-		this.posY = y;
 	}
 	public void setIndex(int in) {
 		//		posY += 8;
@@ -107,14 +96,20 @@ public class CRole1 {
 		this.direction = (dir) % arrClipWalking.length;
 	}
 	public void move(int d) { 
-		if(this.direction == 0)	// down
-			this.setPaintPositionY(this.getPositionY() + d);
-		if(this.direction == 1)	// left
-			this.setPaintPositionX(this.getPositionX() - d);
-		if(this.direction == 2)	// right
-			this.setPaintPositionX(this.getPositionX() + d);
-		if(this.direction == 3)	// up
-			this.setPaintPositionY(this.getPositionY() - d);
+		if(this.direction == 0) {	// down
+			this.posY = this.posY + d;
+		}
+		if(this.direction == 1) {	// left
+			this.posX = this.posX - d;
+		}
+		if(this.direction == 2) {	// right
+			this.posX = this.posX + d;
+		}
+		if(this.direction == 3) {	// up
+			this.posY = this.posY - d;
+		}
+		if(d != 0)
+			this.nextIndex();
 	}
 	// - getter
 	public int getPositionX() {

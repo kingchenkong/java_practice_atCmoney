@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,7 +15,8 @@ public class GameMain {
 
 		GameJPanel gjp = new GameJPanel();
 
-		jf.setTitle("Push Box");;
+		jf.setTitle("Push Box");
+		jf.setBackground(Color.BLACK);
 		jf.setSize(500, 522);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.add(gjp);

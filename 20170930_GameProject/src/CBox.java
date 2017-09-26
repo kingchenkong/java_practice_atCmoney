@@ -6,13 +6,14 @@ import javax.imageio.ImageIO;
 
 public class CBox{
 	private int posX, posY;
+	private int row, column;
 	private int forcedDirection;
 	private BufferedImage sourceImage;
-	
-	public CBox(int x, int y){
-		this.posX = y * 50;
-		this.posY = x * 50;
-		
+
+	public CBox(int r, int c){
+		this.posX = c * 50;
+		this.posY = r * 50;
+		this.setRC(r, c);
 		try {
 			this.sourceImage = ImageIO.read(getClass().getResource("resources//02box.png"));
 		}
@@ -20,10 +21,25 @@ public class CBox{
 			System.out.println("this.source IOException.");
 			e.printStackTrace();
 		}
-
-
 	}	
+	// setter
+	public void setRC(int r, int c) {
+		this.row = r;
+		this.column = c;
+	}
+	public void setForecdDir(int dir) {
+		this.forcedDirection = dir;
+	}
 
+	// getter
+	public int[] getRc() {
+		int[] arr = {this.row, this.column};
+		return arr;
+	}
+	public int[] getPos() {
+		int[] arr = {this.posX, this.posY};
+		return arr;
+	}
 	public void paint(Graphics g) {
 		g.drawImage(this.sourceImage, posX, posY, 50, 50, null);
 	}

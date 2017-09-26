@@ -35,17 +35,21 @@ public class GameJPanel extends JPanel{
 		// CMap
 		this.CMap1 = new CMap();
 		this.mapMatrix = this.CMap1.getMapMatrix();
-		
+		// 確認 人物 與 箱子 出生位置, 
+		// - 改善: CMap 讀取 Matrix 時直接存 row & column 減少沒必要的程序
 		for(int i = 0; i < this.mapMatrix.length; i++){  
 			for(int j = 0; j < this.mapMatrix[i].length; j++){
-				if (mapMatrix[i][j] == 5) // 人物
+				if (this.mapMatrix[i][j] == 5) { // 人物
 					this.cRole1 = new CRole1(j * 50, i * 50, 2);
-				if (mapMatrix[i][j] == 2) // 箱子
+					this.posRoleRow = i;
+					this.posRoleColumn = j;
+					this.mapMatrix[i][j] = 0;
+				}
+				if (mapMatrix[i][j] == 2) { // 箱子
 					this.boxList[count++] = new CBox(i, j);
+				}
 			}
 		}
-		this.posRoleRow = 1;
-		this.posRoleColumn = 1;
 		this.oneStepMoveDistance = 0;
 		// listener
 		this.addKeyListener(new CMyListener1());
@@ -63,9 +67,6 @@ public class GameJPanel extends JPanel{
 					if(!isTouchBox()) {
 						cRole1.move(oneStepMoveDistance);
 					}
-					if(isTouchBox()) {
-						whichBox();
-					}
 				}
 				// check which box
 				repaint();
@@ -74,22 +75,101 @@ public class GameJPanel extends JPanel{
 		t1.start();
 		this.timer1IsStart = false;
 	}
-	public void whichBox() {
-		
+	public void pushBox() {
+		switch(this.cRole1.getDirection()) {
+		case 0: // down
+			// check two scale is "Empty"
+			if(this.mapMatrix[this.posRoleRow + 2][this.posRoleColumn] == 0) {
+				// swap Role - Box - Empty
+				this.mapMatrix[this.posRoleRow + 2][this.posRoleColumn] = 2; // empty = box
+				this.mapMatrix[this.posRoleRow + 1][this.posRoleColumn] = 0;
+				// move box
+				// - which box
+				for(int i = 0; i < this.boxList.length; i++) {
+					CBox box = this.boxList[i];
+					int[] rc = box.getRc();
+					if(rc[0] == this.posRoleRow + 1 && rc[1] == this.posRoleColumn) {
+						box.setForecdDir(0);
+						box.setRC(this.posRoleRow + 2, this.posRoleColumn); // 人物兩格遠
+						box.move(50);
+					}
+				}
+			}
+			break;
+		case 1: // left
+			// check two scale is "Empty"
+			if(this.mapMatrix[this.posRoleRow][this.posRoleColumn - 2] == 0) {
+				// swap Role - Box - Empty
+				this.mapMatrix[this.posRoleRow][this.posRoleColumn - 2] = 2; // empty = box
+				this.mapMatrix[this.posRoleRow][this.posRoleColumn - 1] = 0;
+				// move box
+				// - which box
+				for(int i = 0; i < this.boxList.length; i++) {
+					CBox box = this.boxList[i];
+					int[] rc = box.getRc();
+					if(rc[0] == this.posRoleRow && rc[1] == this.posRoleColumn - 1) {
+						box.setForecdDir(1);
+						box.setRC(this.posRoleRow, this.posRoleColumn - 2); // 人物兩格遠
+						box.move(50);
+					}
+				}
+			}
+			break;
+		case 2: // right
+			// check two scale is "Empty"
+			if(this.mapMatrix[this.posRoleRow][this.posRoleColumn + 2] == 0) {
+				// swap Role - Box - Empty
+				this.mapMatrix[this.posRoleRow][this.posRoleColumn + 2] = 2; // empty = box
+				this.mapMatrix[this.posRoleRow][this.posRoleColumn + 1] = 0;
+				// move box
+				// - which box
+				for(int i = 0; i < this.boxList.length; i++) {
+					CBox box = this.boxList[i];
+					int[] rc = box.getRc();
+					if(rc[0] == this.posRoleRow && rc[1] == this.posRoleColumn + 1) {
+						box.setForecdDir(2);
+						box.setRC(this.posRoleRow, this.posRoleColumn + 2);
+						box.move(50);
+					}
+				}
+			}
+			break;
+		case 3: // up
+			// check two scale is "Empty"
+			if(this.mapMatrix[this.posRoleRow - 2][this.posRoleColumn] == 0) {
+				// swap Role - Box - Empty
+				this.mapMatrix[this.posRoleRow - 2][this.posRoleColumn] = 2; // empty = box
+				this.mapMatrix[this.posRoleRow - 1][this.posRoleColumn] = 0;
+				// move box
+				// - which box
+				for(int i = 0; i < this.boxList.length; i++) {
+					CBox box = this.boxList[i];
+					int[] rc = box.getRc();
+					if(rc[0] == this.posRoleRow - 1 && rc[1] == this.posRoleColumn) {
+						box.setForecdDir(3);
+						box.setRC(this.posRoleRow - 2, this.posRoleColumn);
+						box.move(50);
+					}
+				}
+			}
+			break;
+		default:
+			System.out.println("Error: cRole1.getDirection error.");
+		}
 	}
 	public boolean isTouchBlock() {
-		if((this.mapMatrix[this.posRoleRow][(cRole1.getPositionX() + 25) / 50 - 1] == 1 && cRole1.direction == 1) //左
-				|| (this.mapMatrix[this.posRoleRow][this.posRoleColumn + 1] == 1 && cRole1.direction == 2) //右
-				|| (this.mapMatrix[(cRole1.getPositionY() + 25) / 50 - 1][this.posRoleColumn] == 1 && cRole1.direction == 3) //上
-				|| (this.mapMatrix[this.posRoleRow + 1][this.posRoleColumn] == 1  && cRole1.direction == 0)) //下
+		if((this.mapMatrix[this.posRoleRow][(cRole1.getPositionX() + 25) / 50 - 1] == 1 && cRole1.getDirection() == 1) //左
+				|| (this.mapMatrix[this.posRoleRow][this.posRoleColumn + 1] == 1 && cRole1.getDirection() == 2) //右
+				|| (this.mapMatrix[(cRole1.getPositionY() + 25) / 50 - 1][this.posRoleColumn] == 1 && cRole1.getDirection() == 3) //上
+				|| (this.mapMatrix[this.posRoleRow + 1][this.posRoleColumn] == 1  && cRole1.getDirection() == 0)) //下
 			return true;
 		return false;
 	}
 	public boolean isTouchBox() {
-		if((this.mapMatrix[this.posRoleRow][(cRole1.getPositionX() + 25) / 50 - 1] == 2 && cRole1.direction == 1) //左
-				|| (this.mapMatrix[this.posRoleRow][this.posRoleColumn + 1] == 2 && cRole1.direction == 2) //右
-				|| (this.mapMatrix[(cRole1.getPositionY() + 25) / 50 - 1][this.posRoleColumn] == 2 && cRole1.direction == 3) //上
-				|| (this.mapMatrix[this.posRoleRow + 1][this.posRoleColumn] == 2  && cRole1.direction == 0)) //下
+		if((this.mapMatrix[this.posRoleRow][(cRole1.getPositionX() + 25) / 50 - 1] == 2 && cRole1.getDirection() == 1) //左
+				|| (this.mapMatrix[this.posRoleRow][this.posRoleColumn + 1] == 2 && cRole1.getDirection() == 2) //右
+				|| (this.mapMatrix[(cRole1.getPositionY() + 25) / 50 - 1][this.posRoleColumn] == 2 && cRole1.getDirection() == 3) //上
+				|| (this.mapMatrix[this.posRoleRow + 1][this.posRoleColumn] == 2  && cRole1.getDirection() == 0)) //下
 			return true;
 		return false;
 	}
@@ -123,7 +203,15 @@ public class GameJPanel extends JPanel{
 			this.timer1IsStart = false;
 		}
 	}
-
+	public void printMapMatrix() {
+		System.out.println(" -- map");
+		for(int i = 0; i < this.mapMatrix.length; i++) {
+			for(int j = 0; j < this.mapMatrix[i].length; j++) {
+				System.out.print( this.mapMatrix[i][j] + " ");
+			}	
+			System.out.println("");
+		}
+	}
 	class CMyListener1 extends KeyAdapter {
 		@Override public void keyPressed(KeyEvent e) {
 			if(cRole1.getPositionX() % 50 != 0 || cRole1.getPositionY() % 50 != 0)
@@ -132,19 +220,37 @@ public class GameJPanel extends JPanel{
 				if(e.getKeyCode() == KeyEvent.VK_DOWN) {
 					cRole1.setDirection(0);
 					oneStepMoveDistance = 25;
+					if(isTouchBox()) {
+						pushBox();
+					}
 				}
 				if(e.getKeyCode() == KeyEvent.VK_LEFT) {				
 					cRole1.setDirection(1);
 					oneStepMoveDistance = 25;
+					if(isTouchBox()) {
+						pushBox();
+					}
 				}
 				if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
 					cRole1.setDirection(2);
 					oneStepMoveDistance = 25;
+					if(isTouchBox()) {
+						pushBox();
+					}
 				}
 				if(e.getKeyCode() == KeyEvent.VK_UP) {
 					cRole1.setDirection(3);
 					oneStepMoveDistance = 25;
+					if(isTouchBox()) {
+						pushBox();
+					}
 				}
+//				if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+//					printMapMatrix();
+//					if(isTouchBox()) {
+//						pushBox();
+//					}
+//				}
 			}
 		}
 		@Override public void keyReleased(KeyEvent e) {
@@ -154,5 +260,5 @@ public class GameJPanel extends JPanel{
 			oneStepMoveDistance = 0;
 			repaint();
 		}
-	}	
+	}
 }	

@@ -13,8 +13,8 @@ public class CRole1 {
 	private int sourceImageColumnCount;
 	private Dimension sizeOneImg;
 	private Point pointClipStart;
-	int direction;
-	int index;
+	private int direction;
+	private int index;
 	private BufferedImage[][] arrClipWalking;
 	private int posX, posY;
 
@@ -117,5 +117,8 @@ public class CRole1 {
 	}
 	public int getPositionY() {
 		return this.posY;
+	}
+	public int getDirection() {
+		return this.direction;
 	}
 }

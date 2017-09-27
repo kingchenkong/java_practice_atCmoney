@@ -21,9 +21,13 @@ public class GameJPanel extends JPanel{
 	private CRole1 cRole1;
 	private int posRoleRow;
 	private int posRoleColumn;
-	//Box
-	private CBox[] boxList = new CBox[3];
-	private int count = 0;
+	// Goal
+//	private int[][] posGoalRC;
+	private CGoal[] goalList;
+	private int goalCount;
+	// Box
+	private CBox[] boxList;
+	private int boxCount;
 	// Timer
 	private Timer t1;
 	private boolean timer1IsStart;
@@ -36,19 +40,22 @@ public class GameJPanel extends JPanel{
 		this.CMap1 = new CMap();
 		this.mapMatrix = this.CMap1.getMapMatrix();
 		// 確認 人物 與 箱子 出生位置, 
-		// - 改善: CMap 讀取 Matrix 時直接存 row & column 減少沒必要的程序
-		for(int i = 0; i < this.mapMatrix.length; i++){  
-			for(int j = 0; j < this.mapMatrix[i].length; j++){
-				if (this.mapMatrix[i][j] == 5) { // 人物
-					this.cRole1 = new CRole1(j * 50, i * 50, 2);
-					this.posRoleRow = i;
-					this.posRoleColumn = j;
-					this.mapMatrix[i][j] = 0;
-				}
-				if (mapMatrix[i][j] == 2) { // 箱子
-					this.boxList[count++] = new CBox(i, j);
-				}
-			}
+		// role
+		this.posRoleRow = CMap1.getBornRC()[0];
+		this.posRoleColumn = CMap1.getBornRC()[1];
+		this.cRole1 = new CRole1(this.posRoleColumn * 50, this.posRoleRow * 50, 1);
+		// goal
+		this.goalCount = 3;
+//		this.posGoalRC = CMap1.getGoalRC();
+		this.goalList = new CGoal[this.goalCount];
+		for(int i = 0; i < this.goalCount; i++) {
+			this.goalList[i] = new CGoal(CMap1.getGoalRC()[i][0], CMap1.getGoalRC()[i][1]);
+		}
+		// box
+		this.boxCount = 3;
+		this.boxList = new CBox[this.boxCount];
+		for(int i = 0; i < this.boxCount; i++) {
+			this.boxList[i] = new CBox(CMap1.getBoxRC()[i][0], CMap1.getBoxRC()[i][1]);
 		}
 		this.oneStepMoveDistance = 0;
 		// listener
@@ -70,10 +77,21 @@ public class GameJPanel extends JPanel{
 				}
 				// check which box
 				repaint();
+				// check 'mission complete'
+				int completeCount = 0;
+				for(int i = 0; i < goalCount; i++) {
+					if(mapMatrix[goalList[i].getRow()][goalList[i].getColumn()] == 2) {
+						completeCount++;
+					}
+				}
+				if(completeCount == goalCount) {
+					System.out.println("Mission Complete!!!");
+					stopTimer1();
+				}
 			}
 		});
 		t1.start();
-		this.timer1IsStart = false;
+		this.timer1IsStart = true;
 	}
 	public void pushBox() {
 		switch(this.cRole1.getDirection()) {
@@ -181,7 +199,8 @@ public class GameJPanel extends JPanel{
 		// CRole1
 		this.cRole1.paint(g);
 		//box
-		for (int i = 0; i < count; i++) {
+		for (int i = 0; i < this.boxCount; i++) {
+			this.goalList[i].paint(g);
 			this.boxList[i].paint(g);
 		}
 	}
@@ -245,12 +264,9 @@ public class GameJPanel extends JPanel{
 						pushBox();
 					}
 				}
-//				if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-//					printMapMatrix();
-//					if(isTouchBox()) {
-//						pushBox();
-//					}
-//				}
+				if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+					printMapMatrix();
+				}
 			}
 		}
 		@Override public void keyReleased(KeyEvent e) {

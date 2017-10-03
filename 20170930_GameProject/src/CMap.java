@@ -6,6 +6,10 @@ import java.io.FileInputStream;
 import javax.swing.ImageIcon;
 
 public class CMap {	
+	// path
+	String mapPath;
+	// 地圖關卡數
+	private int level;
 	// 素材大小
 	private int eleWidth;  
 	private int eleHeight;  
@@ -23,12 +27,18 @@ public class CMap {
 	private int[] bornRC;
 	// 過關區域 == 3
 	private int[][] goalRC;
+	private int goalCount;
 	// 箱子出現點 == 2
 	private int[][] boxRC;
+	private int boxCount;
 	// 牆壁 == 1
 	// 地板 == 0
 
-	public CMap() {
+	public CMap(int l) {
+		// 地圖關卡數
+		level = l;
+		this.mapPath= String.format("bin//Map//map%s.map", this.level);
+		
 		this.eleWidth = 50;  
 		this.eleHeight = 50;  
 		
@@ -43,11 +53,11 @@ public class CMap {
 		this.allIcons = new ImageIcon[2];
 		this.allIcons[0] = new ImageIcon("bin//resources//00地板.png");
 		this.allIcons[1] = new ImageIcon("bin//resources//01磚牆.png"); 
-		// 
+		// row & coulumn
 		this.bornRC = new int[2];
-		this.goalRC = new int[3][2];
-		this.boxRC = new int[3][2];
-		
+		this.goalRC = new int[10][2];
+		this.boxRC = new int[10][2];
+		// load map
 		this.loadMap();
 	}
 	public void paint(Graphics g) {
@@ -94,22 +104,25 @@ public class CMap {
 	public int[][] getGoalRC() {
 		return this.goalRC;
 	}
+	public int getGoalCount() {
+		return this.goalCount;
+	}
 	public int[][] getBoxRC() {
 		return this.boxRC;
 	}
+	public int getBoxCount() {
+		return this.boxCount;
+	}
 	public void loadMap() {
 		try{ 
-//			System.out.println("開始載入");   
-			String str = "bin//Map//map.map";
-			FileInputStream fis = new FileInputStream(str);
+//			System.out.println("開始載入");
+			FileInputStream fis = new FileInputStream(this.mapPath);
 			DataInputStream dis = new DataInputStream(fis); 
 			// x = row, y = column
 			int x = dis.readInt();  
 			int y = dis.readInt();  
 			map0 = new int[x][y];  
-			map1 = new int[x][y];  
-			int goalCount = 0;
-			int boxCount = 0;
+			map1 = new int[x][y];
 			for(int i = 0; i < x; i++) {  
 				for(int j = 0; j < y; j++) {  
 					map0[i][j] = dis.readInt();
@@ -124,16 +137,16 @@ public class CMap {
 					}
 					// goal
 					if(map1[i][j] == 3 && goalCount < 4) {
-						this.goalRC[goalCount][0] = i; // row
-						this.goalRC[goalCount][1] = j; // column
+						this.goalRC[this.goalCount][0] = i; // row
+						this.goalRC[this.goalCount][1] = j; // column
 						map1[i][j] = 0;
-						goalCount++;
+						this.goalCount++;
 					}
 					// box
 					if(map1[i][j] == 2 && boxCount < 4) {
-						this.boxRC[boxCount][0] = i; // row
-						this.boxRC[boxCount][1] = j; // column
-						boxCount++;
+						this.boxRC[this.boxCount][0] = i; // row
+						this.boxRC[this.boxCount][1] = j; // column
+						this.boxCount++;
 					}
 				}  
 			}  

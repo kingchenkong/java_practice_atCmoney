@@ -15,6 +15,8 @@ public class GameJPanel extends JPanel{
 	private static final long serialVersionUID = 1L;
 	// Attributes
 	// Map
+	// 地圖關卡數
+	private int nowLevel;
 	private CMap CMap1; 
 	private int[][] mapMatrix;
 	// Role
@@ -22,7 +24,7 @@ public class GameJPanel extends JPanel{
 	private int posRoleRow;
 	private int posRoleColumn;
 	// Goal
-//	private int[][] posGoalRC;
+	//	private int[][] posGoalRC;
 	private CGoal[] goalList;
 	private int goalCount;
 	// Box
@@ -34,34 +36,17 @@ public class GameJPanel extends JPanel{
 	// Move
 	private int oneStepMoveDistance;
 
+	// Menu
+	private Menu menu;
+	public static enum STATE {
+		MENU, GAME, LEVEUP, GAMEOVER
+	};
+	public static STATE state = STATE.MENU;
+
 	// Constructor
-	public GameJPanel() {
-		// CMap
-		this.CMap1 = new CMap();
-		this.mapMatrix = this.CMap1.getMapMatrix();
-		// 確認 人物 與 箱子 出生位置, 
-		// role
-		this.posRoleRow = CMap1.getBornRC()[0];
-		this.posRoleColumn = CMap1.getBornRC()[1];
-		this.cRole1 = new CRole1(this.posRoleColumn * 50, this.posRoleRow * 50, 1);
-		// goal
-		this.goalCount = 3;
-//		this.posGoalRC = CMap1.getGoalRC();
-		this.goalList = new CGoal[this.goalCount];
-		for(int i = 0; i < this.goalCount; i++) {
-			this.goalList[i] = new CGoal(CMap1.getGoalRC()[i][0], CMap1.getGoalRC()[i][1]);
-		}
-		// box
-		this.boxCount = 3;
-		this.boxList = new CBox[this.boxCount];
-		for(int i = 0; i < this.boxCount; i++) {
-			this.boxList[i] = new CBox(CMap1.getBoxRC()[i][0], CMap1.getBoxRC()[i][1]);
-		}
-		this.oneStepMoveDistance = 0;
-		// listener
-		this.addKeyListener(new CMyListener1());
-		this.setFocusable(true);
-		this.setFocusTraversalKeysEnabled(false);
+	public GameJPanel(int nl) {
+		this.menu = new Menu();
+		this.constructPanel(nl);
 		// timer
 		t1 = new Timer(50, new ActionListener() {
 			@Override
@@ -85,14 +70,57 @@ public class GameJPanel extends JPanel{
 					}
 				}
 				if(completeCount == goalCount) {
-					System.out.println("Mission Complete!!!");
-					stopTimer1();
+					System.out.println("Mission " + nowLevel + " Complete!!!");
+					//					stopTimer1();
+					toNextLevel();
 				}
 			}
 		});
 		t1.start();
 		this.timer1IsStart = true;
+		//test
+		System.out.println("gc = "+ this.goalCount + ", bc = " + this.boxCount);
 	}
+	public void toNextLevel() {
+		if(this.nowLevel < 2) {
+			this.nowLevel += 1;
+			this.constructPanel(this.nowLevel);
+		}
+	}
+	public void reThisLevel() {
+		this.constructPanel(this.nowLevel);
+	}
+	public void constructPanel(int nl) {
+		// CMap
+		this.nowLevel = nl;
+		this.CMap1 = new CMap(nl);
+		this.mapMatrix = this.CMap1.getMapMatrix();
+		// 確認 人物 與 箱子 出生位置, 
+		// role
+		this.posRoleRow = CMap1.getBornRC()[0];
+		this.posRoleColumn = CMap1.getBornRC()[1];
+		this.cRole1 = new CRole1(this.posRoleColumn * 50, this.posRoleRow * 50, 1);
+		// goal
+		this.goalCount = CMap1.getGoalCount();
+		//				this.posGoalRC = CMap1.getGoalRC();
+		this.goalList = new CGoal[this.goalCount];
+		for(int i = 0; i < this.goalCount; i++) {
+			this.goalList[i] = new CGoal(CMap1.getGoalRC()[i][0], CMap1.getGoalRC()[i][1]);
+		}
+		// box
+		this.boxCount = CMap1.getBoxCount();
+		this.boxList = new CBox[this.boxCount];
+		for(int i = 0; i < this.boxCount; i++) {
+			this.boxList[i] = new CBox(CMap1.getBoxRC()[i][0], CMap1.getBoxRC()[i][1]);
+		}
+		this.oneStepMoveDistance = 0;
+		// listener
+		this.addKeyListener(new CMyListener1());
+		this.addMouseListener(new MouseInput());
+		this.setFocusable(true);
+		this.setFocusTraversalKeysEnabled(false);
+	}
+
 	public void pushBox() {
 		switch(this.cRole1.getDirection()) {
 		case 0: // down
@@ -103,7 +131,7 @@ public class GameJPanel extends JPanel{
 				this.mapMatrix[this.posRoleRow + 1][this.posRoleColumn] = 0;
 				// move box
 				// - which box
-				for(int i = 0; i < this.boxList.length; i++) {
+				for(int i = 0; i < this.boxCount; i++) {
 					CBox box = this.boxList[i];
 					int[] rc = box.getRc();
 					if(rc[0] == this.posRoleRow + 1 && rc[1] == this.posRoleColumn) {
@@ -122,7 +150,7 @@ public class GameJPanel extends JPanel{
 				this.mapMatrix[this.posRoleRow][this.posRoleColumn - 1] = 0;
 				// move box
 				// - which box
-				for(int i = 0; i < this.boxList.length; i++) {
+				for(int i = 0; i < this.boxCount; i++) {
 					CBox box = this.boxList[i];
 					int[] rc = box.getRc();
 					if(rc[0] == this.posRoleRow && rc[1] == this.posRoleColumn - 1) {
@@ -141,7 +169,7 @@ public class GameJPanel extends JPanel{
 				this.mapMatrix[this.posRoleRow][this.posRoleColumn + 1] = 0;
 				// move box
 				// - which box
-				for(int i = 0; i < this.boxList.length; i++) {
+				for(int i = 0; i < this.boxCount; i++) {
 					CBox box = this.boxList[i];
 					int[] rc = box.getRc();
 					if(rc[0] == this.posRoleRow && rc[1] == this.posRoleColumn + 1) {
@@ -160,7 +188,7 @@ public class GameJPanel extends JPanel{
 				this.mapMatrix[this.posRoleRow - 1][this.posRoleColumn] = 0;
 				// move box
 				// - which box
-				for(int i = 0; i < this.boxList.length; i++) {
+				for(int i = 0; i < this.boxCount; i++) {
 					CBox box = this.boxList[i];
 					int[] rc = box.getRc();
 					if(rc[0] == this.posRoleRow - 1 && rc[1] == this.posRoleColumn) {
@@ -194,14 +222,17 @@ public class GameJPanel extends JPanel{
 	// Paint
 	@Override 
 	public void paint(Graphics g) {
-		// CMap1
-		this.CMap1.paint(g);
-		// CRole1
-		this.cRole1.paint(g);
-		//box
-		for (int i = 0; i < this.boxCount; i++) {
-			this.goalList[i].paint(g);
-			this.boxList[i].paint(g);
+		this.menu.paint(g);
+		if(state == STATE.GAME) {
+			// CMap1
+			this.CMap1.paint(g);
+			// CRole1
+			this.cRole1.paint(g);
+			//box
+			for (int i = 0; i < this.boxCount; i++) {
+				this.goalList[i].paint(g);
+				this.boxList[i].paint(g);
+			}
 		}
 	}
 	// Setter
@@ -267,6 +298,10 @@ public class GameJPanel extends JPanel{
 				if(e.getKeyCode() == KeyEvent.VK_SPACE) {
 					printMapMatrix();
 				}
+				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					reThisLevel();
+				}
+				//				System.out.println(e.getKeyCode());
 			}
 		}
 		@Override public void keyReleased(KeyEvent e) {

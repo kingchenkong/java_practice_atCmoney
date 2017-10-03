@@ -13,7 +13,7 @@ public class GameMain {
 	public static void mainExecute() {
 		final JFrame jf = new JFrame();
 
-		GameJPanel gjp = new GameJPanel();
+		GameJPanel gjp = new GameJPanel(2);
 
 		jf.setTitle("Push Box");
 		jf.setBackground(Color.BLACK);
